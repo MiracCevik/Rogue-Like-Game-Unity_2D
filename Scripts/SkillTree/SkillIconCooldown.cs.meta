@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 611e117e75b7f214785b2fd150e5bd33
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - skillIcon: {instanceID: 0}
+  - grayscaleMaterial: {fileID: 2100000, guid: 6e6e63be5bd5f474484c79f8e1b92d51, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

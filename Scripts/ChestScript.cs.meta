@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 080b164873313884ba1f954be845e121
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - chestAnimator: {instanceID: 0}
+  - weaponUIPanel: {fileID: 3997814731684453821, guid: 06f0c38c29f19e24696f1e892c0cec7e, type: 3}
+  - weaponCardPrefab: {fileID: 3997814731684453821, guid: 06f0c38c29f19e24696f1e892c0cec7e, type: 3}
+  - weaponCardContainer: {fileID: 8504363979290309423, guid: 06f0c38c29f19e24696f1e892c0cec7e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
