@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae4d11cb523c867449b15891f69196a2, type: 3}
+  m_Name: Rock
+  m_EditorClassIdentifier: 
+  enemyName: Rock
+  enemyIcon: {fileID: 2775701068622945926, guid: f7ea70eedecbfe34a93819309bcaf901, type: 3}
+  enemyDamage: 10
+  enemyHealth: 200
+  attackSpeed: 1
+  attackRange: 5
+  normalAttackTrigger: Rock_Attack
+  attackType: 0
+  moveSpeed: 2
+  rewards: 100

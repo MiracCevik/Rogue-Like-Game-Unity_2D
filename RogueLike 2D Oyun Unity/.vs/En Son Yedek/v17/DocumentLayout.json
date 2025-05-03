@@ -1,0 +1,566 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\telelportstones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\telelportstones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\spawnpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spawnpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\nextlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\nextlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\markettrigger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\markettrigger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\finishstatue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\finishstatue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\enemyinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\dummy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dummy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\deathzone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\deathzone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\chestscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\chestscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\charactercontrolsc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\charactercontrolsc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\attackrange.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\attackrange.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\armscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\armscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\weaponsystem\\weaponsscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\weaponsscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\weaponsystem\\weaponcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\weaponcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\weaponsystem\\weaponbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\weaponbutton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\weaponsystem\\enemybullets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\enemybullets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\weaponsystem\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\skilltree\\skilltree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\skilltree\\skilltree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\skilltree\\skilliconcooldown.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\skilltree\\skilliconcooldown.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\weapondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\weapondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\statmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\statmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\skilldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\skilldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\scriptableobjecttojson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\scriptableobjecttojson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\jsonmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\jsonmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\enemystats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\enemystats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\dynamiccharstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\dynamiccharstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\scriptableobjects\\defaultcharstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\defaultcharstats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\scripts\\savesystem\\savemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\savesystem\\savemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|c:\\users\\mirac\\onedrive\\masa\u00FCst\u00FC\\unity\\en son yedek\\assets\\scripts\\savesystem\\charmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\savesystem\\charmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\assets\\assets\\newunlitshader.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{F8C8DE24-BD2A-0CAE-8FB8-69656162B32A}|Assembly-CSharp.csproj|solutionrelative:assets\\assets\\newunlitshader.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CharacterControlSc.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\CharacterControlSc.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CharacterControlSc.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\CharacterControlSc.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CharacterControlSc.cs",
+              "ViewState": "AgIAAA4BAAAAAAAAAAAAACUBAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T16:26:21.331Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Enemy.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\Enemy.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Enemy.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\Enemy.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Enemy.cs",
+              "ViewState": "AgIAANUAAAAAAAAAAAAAANEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-24T14:41:32.96Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TelelportStones.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\TelelportStones.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\TelelportStones.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\TelelportStones.cs",
+              "RelativeToolTip": "Assets\\Scripts\\TelelportStones.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAAAkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:14:07.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NextLevel.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\NextLevel.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NextLevel.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\NextLevel.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NextLevel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:14:01.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MarketTrigger.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\MarketTrigger.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MarketTrigger.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\MarketTrigger.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MarketTrigger.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAAHcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:13:26.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainMenu.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\MainMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MainMenu.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\MainMenu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MainMenu.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:13:23.915Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EnemyInterface.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\EnemyInterface.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyInterface.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\EnemyInterface.cs",
+              "RelativeToolTip": "Assets\\Scripts\\EnemyInterface.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:13:16.697Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Dummy.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\Dummy.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Dummy.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\Dummy.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Dummy.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAEAAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:12:59.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DeathZone.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\DeathZone.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\DeathZone.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\DeathZone.cs",
+              "RelativeToolTip": "Assets\\Scripts\\DeathZone.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:12:55.982Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ArmScript.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ArmScript.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ArmScript.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ArmScript.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ArmScript.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:12:38.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "WeaponButton.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\WeaponButton.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\WeaponButton.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\WeaponButton.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\WeaponButton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:11:45.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SpawnPoint.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SpawnPoint.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SpawnPoint.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SpawnPoint.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SpawnPoint.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-24T15:37:31.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "EnemyBullets.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\EnemyBullets.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\EnemyBullets.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\EnemyBullets.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\EnemyBullets.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:11:41.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Bullet.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAACgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:11:04.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SkillIconCooldown.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SkillTree\\SkillIconCooldown.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SkillTree\\SkillIconCooldown.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SkillTree\\SkillIconCooldown.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SkillTree\\SkillIconCooldown.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:10:28.578Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FinishStatue.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\FinishStatue.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\FinishStatue.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\FinishStatue.cs",
+              "RelativeToolTip": "Assets\\Scripts\\FinishStatue.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-24T15:20:35.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "WeaponData.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\WeaponData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\WeaponData.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\WeaponData.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\WeaponData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:10:10.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "WeaponCard.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\WeaponCard.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\WeaponCard.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\WeaponCard.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\WeaponCard.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAEMAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-24T17:00:33.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AttackRange.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\AttackRange.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\AttackRange.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\AttackRange.cs",
+              "RelativeToolTip": "Assets\\Scripts\\AttackRange.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAAI4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T16:33:21.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ChestScript.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ChestScript.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ChestScript.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ChestScript.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ChestScript.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAF0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-24T16:51:29.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Statmanager.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\Statmanager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\Statmanager.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\Statmanager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\Statmanager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:10:04.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SkillData.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\SkillData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\SkillData.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\SkillData.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\SkillData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:09:55.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "WeaponsScript.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAAK8AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-24T15:53:42.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ScriptableObjecttoJSON.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\ScriptableObjecttoJSON.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\ScriptableObjecttoJSON.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\ScriptableObjecttoJSON.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\ScriptableObjecttoJSON.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAC0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:09:33.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "JSONManager.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\JSONManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\JSONManager.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\JSONManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\JSONManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:09:16.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "EnemyStats.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\EnemyStats.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\EnemyStats.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\EnemyStats.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\EnemyStats.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:09:13.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SkillTree.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "ViewState": "AgIAAOUAAAAAAAAAAAAAAN8AAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-22T16:20:12.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "DynamicCharStats.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\DynamicCharStats.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\DynamicCharStats.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\DynamicCharStats.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\DynamicCharStats.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:09:09.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "DefaultCharStats.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\DefaultCharStats.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ScriptableObjects\\DefaultCharStats.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\ScriptableObjects\\DefaultCharStats.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\DefaultCharStats.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:09:06.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "CharManager.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SaveSystem\\CharManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SaveSystem\\CharManager.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SaveSystem\\CharManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SaveSystem\\CharManager.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAC0AAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-16T16:08:16.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "NewUnlitShader.shader",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Assets\\NewUnlitShader.shader",
+              "RelativeDocumentMoniker": "Assets\\Assets\\NewUnlitShader.shader",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Assets\\NewUnlitShader.shader",
+              "RelativeToolTip": "Assets\\Assets\\NewUnlitShader.shader",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
+              "WhenOpened": "2025-01-09T18:06:17.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "SaveManager.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SaveSystem\\SaveManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SaveSystem\\SaveManager.cs",
+              "ToolTip": "C:\\Users\\mirac\\OneDrive\\Masa\u00FCst\u00FC\\unity\\En Son Yedek\\Assets\\Scripts\\SaveSystem\\SaveManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SaveSystem\\SaveManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-09T17:25:56.012Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

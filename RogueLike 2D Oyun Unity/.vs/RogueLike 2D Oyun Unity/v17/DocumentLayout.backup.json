@@ -1,0 +1,230 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|c:\\users\\mirac\\documents\\roguelike 2d oyun unity\\assets\\scripts\\charactercontrolsc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\charactercontrolsc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|c:\\users\\mirac\\documents\\roguelike 2d oyun unity\\assets\\scripts\\attackrange.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\attackrange.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\onlinemod\\networkspawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\onlinemod\\networkspawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\onlinemod\\onlineplayermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\onlinemod\\onlineplayermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\weaponsystem\\weaponsscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\weaponsscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\networkplayerspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\networkplayerspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\skilltree\\skilltree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\skilltree\\skilltree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\deathzone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\deathzone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\prefabs\\aoeattacktools\\aoe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\prefabs\\aoeattacktools\\aoe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\weaponsystem\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\weaponsystem\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\assets\\scripts\\spawnpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{14D029D8-0A03-A8E5-DCCE-B96767A05493}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spawnpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CharacterControlSc.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\CharacterControlSc.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CharacterControlSc.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\CharacterControlSc.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CharacterControlSc.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAhwFkAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T14:55:32.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AttackRange.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\AttackRange.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\AttackRange.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\AttackRange.cs",
+              "RelativeToolTip": "Assets\\Scripts\\AttackRange.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAhwDQAAAB8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T06:57:07.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NetworkSpawnManager.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\OnlineMod\\NetworkSpawnManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\OnlineMod\\NetworkSpawnManager.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\OnlineMod\\NetworkSpawnManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\OnlineMod\\NetworkSpawnManager.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACQAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T06:58:04.845Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OnlinePlayerManager.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\OnlineMod\\OnlinePlayerManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\OnlineMod\\OnlinePlayerManager.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\OnlineMod\\OnlinePlayerManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\OnlineMod\\OnlinePlayerManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T06:57:43.594Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NetworkPlayerSpawner.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\NetworkPlayerSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NetworkPlayerSpawner.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\NetworkPlayerSpawner.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NetworkPlayerSpawner.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAAYAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T06:41:46.496Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Bullet.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\Bullet.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAArwDQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T14:24:11.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WeaponsScript.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "RelativeToolTip": "Assets\\Scripts\\WeaponSystem\\WeaponsScript.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAewDEAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T14:23:59.067Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AoE.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Prefabs\\AoEAttackTools\\AoE.cs",
+              "RelativeDocumentMoniker": "Assets\\Prefabs\\AoEAttackTools\\AoE.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Prefabs\\AoEAttackTools\\AoE.cs",
+              "RelativeToolTip": "Assets\\Prefabs\\AoEAttackTools\\AoE.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T14:21:57.008Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MainMenu.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\MainMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MainMenu.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\MainMenu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MainMenu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T13:32:56.246Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Enemy.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\Enemy.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Enemy.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\Enemy.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Enemy.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAkwFwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T13:32:52.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SpawnPoint.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\SpawnPoint.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SpawnPoint.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\SpawnPoint.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SpawnPoint.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T13:32:44.999Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SkillTree.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SkillTree\\SkillTree.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T14:24:19.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DeathZone.cs",
+              "DocumentMoniker": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\DeathZone.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\DeathZone.cs",
+              "ToolTip": "C:\\Users\\mirac\\Documents\\RogueLike 2D Oyun Unity\\Assets\\Scripts\\DeathZone.cs",
+              "RelativeToolTip": "Assets\\Scripts\\DeathZone.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T08:11:42.914Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

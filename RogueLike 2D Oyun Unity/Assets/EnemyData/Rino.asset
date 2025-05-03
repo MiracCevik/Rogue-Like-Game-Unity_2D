@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae4d11cb523c867449b15891f69196a2, type: 3}
+  m_Name: Rino
+  m_EditorClassIdentifier: 
+  enemyName: Rino
+  enemyIcon: {fileID: -1075854790282143660, guid: e3531be27cb827743bac8ea66dae5bfd, type: 3}
+  enemyDamage: 10
+  enemyHealth: 300
+  attackSpeed: 2
+  attackRange: 5
+  normalAttackTrigger: Rino_Attack
+  attackType: 0
+  moveSpeed: 2
+  rewards: 200
