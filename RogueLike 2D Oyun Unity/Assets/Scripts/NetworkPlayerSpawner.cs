@@ -20,7 +20,6 @@ public class NetworkPlayerSpawner : NetworkBehaviour
     {
         if (IsServer)
         {
-            // Host oyuncusunu spawn et
             SpawnPlayer(NetworkManager.Singleton.LocalClientId);
         }
     }
@@ -29,7 +28,6 @@ public class NetworkPlayerSpawner : NetworkBehaviour
     {
         if (IsServer && clientId != NetworkManager.Singleton.LocalClientId)
         {
-            // Yeni bağlanan client'ı spawn et
             SpawnPlayer(clientId);
         }
     }
@@ -43,7 +41,6 @@ public class NetworkPlayerSpawner : NetworkBehaviour
 
     private IEnumerator SpawnPlayerDelayed(ulong clientId)
     {
-        // Network bağlantısının tamamen kurulması için kısa bir bekleme
         yield return new WaitForSeconds(0.5f);
 
         var player = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
@@ -51,17 +48,14 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         {
             Vector3 spawnPosition = GetNextSpawnPosition();
             
-            // Önce fizik motorunu devre dışı bırak
             var rb = player.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 rb.simulated = false;
             }
 
-            // Pozisyonu ayarla
             player.transform.position = spawnPosition;
 
-            // Fizik değerlerini sıfırla ve fizik motorunu tekrar etkinleştir
             if (rb != null)
             {
                 rb.velocity = Vector2.zero;
@@ -77,7 +71,7 @@ public class NetworkPlayerSpawner : NetworkBehaviour
         {
             Vector3[] defaultPositions = new Vector3[]
             {
-                new Vector3(-2f, 2f, 0f), // Y pozisyonunu biraz yükselttim
+                new Vector3(-2f, 2f, 0f),
                 new Vector3(2f, 2f, 0f),
                 new Vector3(-4f, 2f, 0f),
                 new Vector3(4f, 2f, 0f)

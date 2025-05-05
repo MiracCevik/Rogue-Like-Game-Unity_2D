@@ -16,13 +16,10 @@ public class NetworkSpawnManager : NetworkBehaviour
 
     void SpawnPlayers()
     {
-        // Server başladığında çağrılır
-        Debug.Log("Server started, ready to spawn players");
     }
 
     void SpawnPlayer(ulong clientId)
     {
-        // Yeni bir oyuncu bağlandığında çağrılır
         if (IsServer)
         {
             Transform spawnPoint = GetRandomSpawnPoint();
@@ -44,7 +41,7 @@ public class NetworkSpawnManager : NetworkBehaviour
     {
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
-            return transform; // Eğer spawn point yoksa kendi pozisyonunu kullan
+            return transform; 
         }
         return spawnPoints[Random.Range(0, spawnPoints.Length)];
     }

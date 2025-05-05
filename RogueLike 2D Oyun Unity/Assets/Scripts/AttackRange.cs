@@ -26,16 +26,12 @@ public class AttackRange : NetworkBehaviour
         }
         else
         {
-            Debug.LogError("AttackRange: Enemy GameObject could not be determined.");
             enabled = false;
             return;
         }
         
-        if (stats == null) Debug.LogError($"EnemyStats not found on {enemy.name}!");
-        if (animator == null) Debug.LogError($"Animator not found on {enemy.name}!");
 
         if (circleCollider == null) circleCollider = GetComponent<CircleCollider2D>();
-        if (circleCollider == null) Debug.LogError("CircleCollider2D not found on AttackRange object!");
     }
 
     void Update()
@@ -88,23 +84,15 @@ public class AttackRange : NetworkBehaviour
             int damageToApply = stats.enemyDamage;
             if (damageToApply > 0)
             {
-                Debug.Log($"[Server] AttackRange: Enemy ({enemy.name}) attacking Player {targetCharacter.OwnerClientId}. Damage: {damageToApply}");
                 targetCharacter.ReceiveDamageServerRpc(damageToApply); 
             
                 animator.SetTrigger("Attack");
-            }
-            else
-            {
-                Debug.LogWarning($"[Server] AttackRange: Enemy ({enemy.name}) attempting attack but damage is zero.");
             }
             
             float attackCooldown = (stats.attackSpeed > 0) ? (1.0f / stats.attackSpeed) : 1.0f;
             yield return new WaitForSeconds(attackCooldown);
         }
-        else
-        {
-            Debug.LogWarning($"[Server] AttackRange: Attack coroutine stopped early. Target valid: {targetCharacter != null && targetCharacter.IsSpawned}, Stats valid: {stats != null}, Animator valid: {animator != null}");
-        }
+       
 
         isAttacking = false; 
     }

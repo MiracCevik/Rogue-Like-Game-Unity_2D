@@ -31,7 +31,6 @@ public class Enemies : NetworkBehaviour
 
     void Awake()
     {
-        // �evrimd��� modda d��man� ba�lat
         if (!NetworkManager.Singleton.IsListening)
         {
             InitializeEnemy();
@@ -44,7 +43,6 @@ public class Enemies : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // �evrimi�i mod i�in
         if (NetworkManager.Singleton.IsListening)
         {
             if (IsServer)
@@ -65,22 +63,20 @@ public class Enemies : NetworkBehaviour
 
     void Start()
     {
-        // Oyuncuyu bul ve referanslar� ayarla
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player != null)
         {
             karakterRef = player.GetComponent<KarakterHareket>();
             if (karakterRef == null)
             {
-                Debug.LogWarning("KarakterHareket bile�eni bulunamad�!");
+                Debug.LogWarning("KarakterHareket bileeni bulunamad!");
             }
         }
         else
         {
-            Debug.LogWarning("Player bulunamad�!");
+            Debug.LogWarning("Player bulunamad!");
         }
 
-        // AttackRange bile�enini al
         if (attackRange == null)
         {
             attackRange = GetComponent<AttackRange>();
@@ -94,14 +90,12 @@ public class Enemies : NetworkBehaviour
 
     void Update()
     {
-        // �evrimd��� mod i�in kontrol
         if (!NetworkManager.Singleton.IsListening)
         {
             UpdateEnemyBehavior();
             return;
         }
 
-        // �evrimi�i mod i�in kontrol
         if (!IsServer) return;
         UpdateEnemyBehavior();
     }
@@ -110,16 +104,14 @@ public class Enemies : NetworkBehaviour
     {
         if (player == null) 
         {
-            // Attempt to find player again if null (simple fallback, not ideal)
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
-            if(player == null) return; // Still no player found, can't proceed
+            if(player == null) return; 
         }
 
         float distance = Vector2.Distance(transform.position, player.position);
 
         if (enemyStats.attackType == AttackType.Melee && distance <= enemyStats.attackRange)
         {
-            // Pass the player transform to MoveTowardsPlayer
             if (attackRange != null)
             {
                  attackRange.MoveTowardsPlayer(player); 
@@ -161,9 +153,7 @@ public class Enemies : NetworkBehaviour
                 attackBehavior = new RangedAttack(karakterRef);
                 attackBehavior.ExecuteAttack(animator, player, enemyStats, transform, bulletPrefab);
                 break;
-                /* case AttackType.Boss:
-                     attackBehavior = new BossAttack();
-                     break;*/
+                
         }
     }
 
@@ -171,7 +161,6 @@ public class Enemies : NetworkBehaviour
     {
         if (enemyStats == null)
         {
-            Debug.LogWarning("EnemyStats atanmad�, varsay�lan de�erler kullan�l�yor.");
 
             enemyStats = ScriptableObject.CreateInstance<EnemyStats>();
             enemyStats.enemyName = "Rock";
@@ -210,7 +199,6 @@ public class Enemies : NetworkBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            // animator.SetTrigger(enemyStats.normalAttackTrigger);
         }
     }
 
@@ -257,7 +245,7 @@ public class Enemies : NetworkBehaviour
         {
             float healthRatio = (float)currentHealth / enemyStats.enemyHealth;
             greenHealthBar.rectTransform.localScale = new Vector3(healthRatio, 1, 1);
-            Debug.Log("enemy can�  " + currentHealth);
+            Debug.Log("enemy can  " + currentHealth);
             redHealthBar.enabled = currentHealth < enemyStats.enemyHealth;
         }
     }
@@ -267,7 +255,7 @@ public class Enemies : NetworkBehaviour
         if (!IsServer) return;
 
         karakterRef.gold += enemyStats.rewards;
-        Debug.Log("Karakter Alt�n�: " + karakterRef.gold);
+        Debug.Log("Karakter Altn: " + karakterRef.gold);
         SkillTreeManager skillTreeManager = FindObjectOfType<SkillTreeManager>();
         if (skillTreeManager != null)
         {
@@ -289,7 +277,7 @@ public class Enemies : NetworkBehaviour
         }
         else
         {
-            Debug.LogError("Kaydedilecek EnemyStats bulunamad�!");
+            Debug.LogError("Kaydedilecek EnemyStats bulunamad!");
         }
     }
 
@@ -301,10 +289,6 @@ public class Enemies : NetworkBehaviour
         {
             string json = File.ReadAllText(path);
             JsonUtility.FromJsonOverwrite(json, enemyStats);
-        }
-        else
-        {
-            Debug.LogError("D��man verisi bulunamad�, varsay�lan de�erler y�klenecek.");
         }
     }
 

@@ -34,7 +34,6 @@ public class SkillTreeManager : MonoBehaviour
             {
                 skillIcons[i].Initialize(skills[i]);
 
-                Debug.Log($"Skill {skillData.skillName} i�in Initialize �a�r�ld�.");
             }
         }
     }
@@ -75,7 +74,6 @@ public class SkillTreeManager : MonoBehaviour
         SkillData skill = skills[skillIndex];
         if (skill.isUnlocked)
         {
-            Debug.Log($"{skill.skillName} is already purchased!");
             return;
         }
 
@@ -87,10 +85,7 @@ public class SkillTreeManager : MonoBehaviour
             UpdateGoldUI(karakter.gold);
             SaveManager.Instance.SaveGame();
         }
-        else
-        {
-            Debug.Log("Not enough gold!");
-        }
+       
     }
 
     public void UpdateGoldUI(int currentGold)
@@ -143,15 +138,12 @@ public class SkillTreeManager : MonoBehaviour
     {
         isChargeAttackOnCooldown = false;
         WeaponsScript weaponsScript = player.GetComponentInChildren<WeaponsScript>();
-        Debug.Log("Charge Attack ba�lad�!");
         weaponsScript.PlayAttackAnimation();
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("Charge Attack hasar uyguland�!");
         weaponsScript.Attack(2 * weaponsScript.weaponData.damage);
         yield return new WaitForSeconds(5f); 
 
-        Debug.Log("Charge Attack cooldown sona erdi!");
         isChargeAttackOnCooldown = true;
     }
 
@@ -187,7 +179,6 @@ public class SkillTreeManager : MonoBehaviour
         Collider2D playerCollider = player.GetComponent<Collider2D>();
         float dashDirection = player.transform.localScale.x > 0 ? 1f : -1f;
         player.layer = LayerMask.NameToLayer("Invulnerable");
-        Debug.Log("Dash s�ras�nda karakter hasar almaz durumda.");
         rb.velocity = Vector2.zero;
         rb.AddForce(Vector2.right * dashDirection * 15f, ForceMode2D.Impulse);
         float dashDuration = 0.3f;
@@ -204,7 +195,6 @@ public class SkillTreeManager : MonoBehaviour
                     Enemies enemy = hit.collider.GetComponent<Enemies>();
                     if (enemy != null)
                     {
-                        Debug.Log($"Dash s�ras�nda {enemy.name} hasar ald�: {dashDamage}");
                         enemy.TakeDamageServerRpc(dashDamage);
 
                         Physics2D.IgnoreCollision(playerCollider, hit.collider, true);
@@ -219,7 +209,6 @@ public class SkillTreeManager : MonoBehaviour
         }
 
         player.layer = LayerMask.NameToLayer("Default");
-        Debug.Log("Dash sona erdi, karakter tekrar hasar alabilir.");
         yield return new WaitForSeconds(1f);
         canDash = true;
     }

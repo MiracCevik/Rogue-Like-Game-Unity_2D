@@ -1,4 +1,3 @@
-//Anlýk alýnan deðerler
 using System.Collections.Generic;
 
 [System.Serializable]

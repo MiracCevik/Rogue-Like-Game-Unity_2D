@@ -34,7 +34,6 @@ public class SaveManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -68,14 +67,14 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
 
-        Debug.Log("Oyun baþarýyla kaydedildi: " + saveFilePath);
+        Debug.Log("Oyun baï¿½arï¿½yla kaydedildi: " + saveFilePath);
     }
 
     public void LoadGame()
     {
         if (!File.Exists(saveFilePath))
         {
-            Debug.LogWarning("Kaydedilmiþ dosya bulunamadý, varsayýlan deðerler kullanýlacak.");
+            Debug.LogWarning("Kaydedilmiï¿½ dosya bulunamadï¿½, varsayï¿½lan deï¿½erler kullanï¿½lacak.");
             return;
         }
 

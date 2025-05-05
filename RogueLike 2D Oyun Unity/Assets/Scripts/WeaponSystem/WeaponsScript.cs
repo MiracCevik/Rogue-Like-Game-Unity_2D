@@ -28,7 +28,6 @@ public class WeaponsScript : NetworkBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // WeaponData'dan silah hasarını al
     public int GetWeaponDamage()
     {
         if (weaponData != null)
@@ -38,7 +37,6 @@ public class WeaponsScript : NetworkBehaviour
         return 0;
     }
 
-    // WeaponData'dan saldırı hızını al
     public float GetAttackSpeed()
     {
         if (weaponData != null)
@@ -48,7 +46,6 @@ public class WeaponsScript : NetworkBehaviour
         return 1.0f;
     }
 
-    // WeaponData'dan silah adını al
     public string GetWeaponName()
     {
         if (weaponData != null)
@@ -58,17 +55,15 @@ public class WeaponsScript : NetworkBehaviour
         return "Bilinmeyen Silah";
     }
 
-    // WeaponData'dan silah tipini al
     public WeaponType GetWeaponType()
     {
         if (weaponData != null)
         {
             return weaponData.weaponType;
         }
-        return WeaponType.Sword; // Varsayılan olarak kılıç
+        return WeaponType.Sword; 
     }
 
-    // Silahın uzak menzilli olup olmadığını kontrol et
     public bool IsRangedWeapon()
     {
         if (weaponData != null)
@@ -133,7 +128,6 @@ public class WeaponsScript : NetworkBehaviour
         if (weaponData == null) return;
         DeactivateAllWeapons();
         
-        // Silah tipine göre uygun animasyonu oynat ve silahı aktifleştir
         switch (weaponData.weaponType)
         {
             case WeaponType.Sword:
@@ -182,10 +176,7 @@ public class WeaponsScript : NetworkBehaviour
             weaponPrefab.SetActive(true);
             animator.SetTrigger(animationTrigger);
         }
-        else
-        {
-            Debug.LogWarning("Silah prefab'i atanmadý!");
-        }
+      
     }
 
     private void DeactivateAllWeapons()
@@ -193,7 +184,6 @@ public class WeaponsScript : NetworkBehaviour
         if (riflePrefab != null) riflePrefab.SetActive(false);
         if (pistolPrefab != null) pistolPrefab.SetActive(false);
         
-        // Bow nesnesini bul ve devre dışı bırak
         Transform bowTransform = transform.parent.Find("Bow");
         if (bowTransform != null)
         {
@@ -209,7 +199,6 @@ public class WeaponsScript : NetworkBehaviour
         {
             ShootServerRpc();
             
-            // Cooldown'ı başlatmak için beklemeden hemen ShootCooldown'ı çağır
             StartCoroutine(ShootCooldown());
         }
     }
@@ -219,14 +208,11 @@ public class WeaponsScript : NetworkBehaviour
     {
         if (!canShoot) return;
         
-        // ShootServerRpc içindeki canShoot kontrolden sonra 
-        // canShoot'u false yap, böylece server tarafında da kontrol edilmiş olur
         canShoot = false;
         
         GameObject bulletPrefab = null;
         string weaponTypeStr = "Bilinmeyen";
 
-        // Weapon tipine göre uygun mermi prefabını seç
         switch (weaponData.weaponType)
         {
             case WeaponType.Rifle:
@@ -243,89 +229,66 @@ public class WeaponsScript : NetworkBehaviour
                 break;
             default:
                 Debug.LogWarning("Bu silah türü mermi atışı desteklemiyor.");
-                // CanShoot'u true yap ki tekrar deneyebilsin
                 canShoot = true;
                 return;
         }
 
-        // Bullet prefab var mı kontrol et
         if (bulletPrefab == null)
         {
-            Debug.LogError($"Server: {weaponTypeStr} için bulletPrefab NULL! Lütfen prefabı atayın.");
-            // CanShoot'u true yap ki tekrar deneyebilsin
             canShoot = true;
             return;
         }
         
-        // NetworkObject bileşeni var mı kontrol et
         NetworkObject bulletNetworkObj = bulletPrefab.GetComponent<NetworkObject>();
         if (bulletNetworkObj == null)
         {
-            Debug.LogError($"Server: {weaponTypeStr} bulletPrefab'ında NetworkObject bileşeni yok! Lütfen prefaba NetworkObject ekleyin.");
-            // CanShoot'u true yap ki tekrar deneyebilsin  
             canShoot = true;
             return;
         }
 
-        // Silahı tüm istemcilerde göster
         ActivateWeaponClientRpc(weaponTypeStr);
 
         if (bulletPrefab != null && firePoint != null)
         {
-            // FirePoint pozisyonu doğru mu kontrol et
-            Debug.Log($"Server: firePoint pozisyonu: {firePoint.position}, rotasyon: {firePoint.rotation}");
             
-            // Mermiyi oluştur
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
             
-            // Doğru yön ve hareketi sağla
             Vector2 characterScale = transform.parent.localScale;
             Vector2 direction = characterScale.x > 0 ? Vector2.right : Vector2.left;
             
-            // Bullet bileşeni varsa kullan
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             if (bulletScript != null)
             {
                 int totalDamage = CalculateWeaponDamage();
                 bulletScript.Initialize(direction, totalDamage, transform.parent.gameObject);
                 bulletScript.SetWeaponData(weaponData);
-                Debug.Log($"Server: Mermi başlatıldı. Yön: {direction}, Hasar: {totalDamage}");
             }
             else
-            {
-                Debug.LogError($"Server: Mermi nesnesinde Bullet bileşeni bulunamadı!");
-                // Basit hareket ekle
+            { 
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
                     rb.velocity = direction * 10f;
-                    Debug.Log($"Server: Alternatif hareket eklendi - yön: {direction}");
                 }
             }
             
-            // Ağ üzerinde spawn et
             NetworkObject bulletNetObj = bullet.GetComponent<NetworkObject>();
             if (bulletNetObj != null)
             {
                 try 
                 {
                     bulletNetObj.Spawn();
-                    Debug.Log($"Server: {weaponTypeStr} mermisi ağda spawn edildi.");
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError($"Server: Mermi spawn edilirken hata: {e.Message}");
                     Destroy(bullet);
-                    // Hata olduğunda CanShoot'u true yap ki tekrar deneyebilsin
                     canShoot = true;
                     return;
                 }
             }
             else
             {
-                Debug.LogError($"Server: {weaponTypeStr} mermisinde NetworkObject bileşeni bulunamadı!");
                 Destroy(bullet);
-                // Hata olduğunda CanShoot'u true yap ki tekrar deneyebilsin
                 canShoot = true;
                 return;
             }
@@ -334,8 +297,6 @@ public class WeaponsScript : NetworkBehaviour
         }
         else
         {
-            Debug.LogError($"Server: bulletPrefab veya firePoint null! bulletPrefab:{bulletPrefab}, firePoint:{firePoint}");
-            // Hata olduğunda CanShoot'u true yap ki tekrar deneyebilsin
             canShoot = true;
         }
     }
@@ -343,10 +304,8 @@ public class WeaponsScript : NetworkBehaviour
     [ClientRpc]
     private void ActivateWeaponClientRpc(string weaponType)
     {
-        // Önce tüm silahları devre dışı bırak
         DeactivateAllWeapons();
         
-        // Sadece ateşlenen silahı aktifleştir
         GameObject weaponObj = null;
         
         switch (weaponType)
@@ -355,7 +314,6 @@ public class WeaponsScript : NetworkBehaviour
                 if (riflePrefab != null) 
                 {
                     weaponObj = riflePrefab;
-                    Debug.Log($"Client: Rifle silahı aktifleştiriliyor. GameObject: {riflePrefab.name}");
                 }
                 break;
                 
@@ -363,7 +321,6 @@ public class WeaponsScript : NetworkBehaviour
                 if (pistolPrefab != null) 
                 {
                     weaponObj = pistolPrefab;
-                    Debug.Log($"Client: Pistol silahı aktifleştiriliyor. GameObject: {pistolPrefab.name}");
                 }
                 break;
                 
@@ -372,60 +329,39 @@ public class WeaponsScript : NetworkBehaviour
                 if (bowTransform != null)
                 {
                     weaponObj = bowTransform.gameObject;
-                    Debug.Log($"Client: Bow silahı aktifleştiriliyor. GameObject: {bowTransform.name}");
                 }
                 break;
         }
         
         if (weaponObj != null)
         {
-            // Silahı aktifleştir, pozisyon ve ölçeğe dokunma
             weaponObj.SetActive(true);
             
-            // Silahın görüntülenmesini garanti etmek için
             SpriteRenderer renderer = weaponObj.GetComponent<SpriteRenderer>();
             if (renderer != null)
             {
                 renderer.enabled = true;
                 Color color = renderer.color;
-                // Tamamen görünür olmasını sağla
                 color.a = 1.0f;
                 renderer.color = color;
             }
             
-            Debug.Log($"Client: {weaponType} silahı aktifleştirildi.");
             StartCoroutine(DeactivateWeaponAfterDelay(weaponObj, 1.5f));
-        }
-        else
-        {
-            Debug.LogWarning($"Client: {weaponType} silahı bulunamadı veya aktifleştirilemedi!");
         }
     }
 
-    // Silahı karakterin elinde doğru pozisyona yerleştir
     private void PositionWeapon(GameObject weapon)
     {
-        try
-        {
-            // NOT: Kullanıcının isteği üzerine pozisyon ve ölçek değiştirilmiyor
-            // Prefab'ın orijinal pozisyonu ve ölçeği korunuyor
-            
-            // Sadece üst katmanda göstermek için sırasını ayarla
+        
             SpriteRenderer renderer = weapon.GetComponent<SpriteRenderer>();
             if (renderer != null)
             {
-                renderer.sortingOrder = 10; // Karakterin önünde görünmesi için yüksek bir değer
+                renderer.sortingOrder = 10; 
             }
             
-            Debug.Log($"Client: Silah aktifleştirildi.");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Client: Silah aktifleştirilirken hata oluştu: {e.Message}");
-        }
+        
     }
 
-    // Silahı gecikmeyle devre dışı bırak
     private IEnumerator DeactivateWeaponAfterDelay(GameObject weapon, float delay)
     {
         if (weapon == null) yield break;
@@ -435,17 +371,13 @@ public class WeaponsScript : NetworkBehaviour
         if (weapon != null)
         {
             weapon.SetActive(false);
-            Debug.Log($"Client: Silah devre dışı bırakıldı: {weapon.name}");
         }
     }
 
-    // Mevcut silah değiştiğinde çağrılan metod
     public void OnWeaponChanged(WeaponData newWeaponData)
     {
-        // Önce tüm silahları devre dışı bırak
         DeactivateAllWeapons();
         
-        // Yeni silah tipine göre uygun silahı aktifleştir
         if (newWeaponData != null)
         {
             switch (newWeaponData.weaponType)
@@ -455,7 +387,6 @@ public class WeaponsScript : NetworkBehaviour
                     {
                         PositionWeapon(riflePrefab);
                         riflePrefab.SetActive(true);
-                        Debug.Log($"Silah değişimi: Rifle aktifleştirildi");
                     }
                     break;
                     
@@ -464,7 +395,6 @@ public class WeaponsScript : NetworkBehaviour
                     {
                         PositionWeapon(pistolPrefab);
                         pistolPrefab.SetActive(true);
-                        Debug.Log($"Silah değişimi: Pistol aktifleştirildi");
                     }
                     break;
                     
@@ -474,18 +404,15 @@ public class WeaponsScript : NetworkBehaviour
                     {
                         PositionWeapon(bowTransform.gameObject);
                         bowTransform.gameObject.SetActive(true);
-                        Debug.Log($"Silah değişimi: Bow aktifleştirildi");
                     }
                     break;
                     
                 default:
-                    // Diğer silah tipleri için gerekirse ekle
                     break;
             }
         }
     }
 
-    // WeaponData değiştiğinde bu metodu çağır
     public void SetWeaponData(WeaponData newWeaponData)
     {
         weaponData = newWeaponData;
@@ -497,14 +424,12 @@ public class WeaponsScript : NetworkBehaviour
     {
         string triggerName = "";
         
-        // WeaponData'daki normalAttackTrigger'ı kullan
         if (weaponData != null && !string.IsNullOrEmpty(weaponData.normalAttackTrigger))
         {
             triggerName = weaponData.normalAttackTrigger;
         }
         else
         {
-            // Fallback olarak silah tipine göre belirle
             switch (weaponType)
             {
                 case "Rifle":
@@ -525,30 +450,19 @@ public class WeaponsScript : NetworkBehaviour
         if (animator != null)
         {
             animator.SetTrigger(triggerName);
-            Debug.Log($"Client: {triggerName} animasyonu tetiklendi.");
-        }
-        else
-        {
-            Debug.LogError($"Client: Animator bulunamadı, {triggerName} animasyonu tetiklenemedi!");
         }
     }
 
     private IEnumerator ShootCooldown()
     {
-        // canShoot'u false yap - şimdi client tarafında başlatılıyor
         canShoot = false;
         
-        // AttackSpeed doğrudan atışlar arasındaki süre olarak yorumla (saniye cinsinden)
-        // Bu değer ne kadar küçükse, atış hızı o kadar yüksektir
         float cooldownTime = weaponData != null ? weaponData.attackSpeed : 1f;
         
-        // Bekleme süresi sonunda ateş edebilmeyi etkinleştir
         yield return new WaitForSeconds(cooldownTime);
         
-        // Süre sonunda tekrar ateş edebilir
         canShoot = true;
         
-        Debug.Log($"Ateş cooldown bitti ({cooldownTime}s). Tekrar ateş edilebilir.");
     }
 
     private int CalculateWeaponDamage()
