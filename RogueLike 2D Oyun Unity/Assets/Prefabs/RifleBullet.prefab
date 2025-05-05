@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1841226223972534019}
   - component: {fileID: 1841226223972534018}
+  - component: {fileID: -3709223353342267944}
   - component: {fileID: -7260028239127771894}
   - component: {fileID: -1876894427462000791}
   - component: {fileID: 5485162129052350030}
@@ -87,6 +88,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-3709223353342267944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841226223972534045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 874988310
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &-7260028239127771894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +124,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: ece8e465ded07be4592f57d0e7191c1a, type: 2}
   speed: 10
   lifetime: 5
+  isFacingRight: 1
 --- !u!70 &-1876894427462000791
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

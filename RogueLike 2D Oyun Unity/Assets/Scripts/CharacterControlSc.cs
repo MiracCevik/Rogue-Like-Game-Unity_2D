@@ -252,11 +252,27 @@ public class KarakterHareket : NetworkBehaviour
              return;
         }
 
+        // Silah Animator kontrolü
+        if (weaponAnimator == null && weaponObject != null)
+        {
+            weaponAnimator = weaponObject.GetComponent<Animator>();
+            Debug.LogWarning($"[Server - Sender: {clientId}] Silah Animator otomatik olarak yeniden tanımlandı.");
+        }
+
         string animTrigger = weaponsScript.weaponData.normalAttackTrigger;
         if (string.IsNullOrEmpty(animTrigger))
         {
-            animTrigger = "Attack";
-            Debug.LogWarning($"[Server - Sender: {clientId}] WeaponData ({weaponsScript.weaponData.name}) içinde normalAttackTrigger tanımlı değil. Varsayılan '{animTrigger}' kullanılıyor.");
+            // Silah tipine göre varsayılan trigger isimlerini ayarla
+            if (weaponsScript.weaponData.weaponName == "Scythe")
+            {
+                animTrigger = "ScytheAttack";
+                Debug.Log("Scythe için özel animTrigger ayarlandı: " + animTrigger);
+            }
+            else
+            {
+                animTrigger = "Attack";
+                Debug.LogWarning($"[Server - Sender: {clientId}] WeaponData ({weaponsScript.weaponData.name}) içinde normalAttackTrigger tanımlı değil. Varsayılan '{animTrigger}' kullanılıyor.");
+            }
         }
 
         TriggerAttackAnimationClientRpc(animTrigger);
@@ -264,48 +280,155 @@ public class KarakterHareket : NetworkBehaviour
         canAttack = false;
         StartCoroutine(AttackCooldown());
 
-        float attackRange = 1.0f;
-        float attackRadius = 0.5f;
-
-        Vector2 attackOrigin = (Vector2)transform.position + (Vector2)(transform.right * transform.localScale.x * (attackRange * 0.5f));
-
-        int playerLayer = LayerMask.NameToLayer("Player");
-        LayerMask playerLayerMask = 1 << playerLayer;
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackOrigin, attackRadius, playerLayerMask);
-
-        Debug.Log($"[Server - Sender: {clientId}] Saldırı yapıldı. Origin: {attackOrigin}, Radius: {attackRadius}, LayerMask: {LayerMask.LayerToName(playerLayer)}, Vurulan Collider Sayısı: {hits.Length}");
-
-        foreach (Collider2D hit in hits)
+        // Uzak menzilli silah kontrolü
+        string weaponName = weaponsScript.weaponData.weaponName;
+        bool isRangedWeapon = weaponName == "Bow" || weaponName == "Pistol" || weaponName == "Rifle";
+        
+        if (isRangedWeapon)
         {
-            // Detaylı log ekle
-            Debug.Log($"[Server - Sender: {clientId}] Hit: {hit.gameObject.name}, Layer: {LayerMask.LayerToName(hit.gameObject.layer)}, Tag: {hit.tag}, Is Trigger: {hit.isTrigger}");
+            // Uzak menzilli silah için mermi oluştur
+            HandleRangedWeaponAttack(weaponName, clientId);
+        }
+        else
+        {
+            // Yakın dövüş silahı için mevcut mantık
+            float attackRange = 1.0f;
+            float attackRadius = 0.5f;
 
-            if (hit.gameObject == gameObject) continue;
+            Vector2 attackOrigin = (Vector2)transform.position + (Vector2)(transform.right * transform.localScale.x * (attackRange * 0.5f));
 
-            KarakterHareket targetCharacter = hit.GetComponent<KarakterHareket>();
-            if (targetCharacter != null && targetCharacter.IsSpawned)
+            int playerLayer = LayerMask.NameToLayer("Player");
+            LayerMask playerLayerMask = 1 << playerLayer;
+
+            Collider2D[] hits = Physics2D.OverlapCircleAll(attackOrigin, attackRadius, playerLayerMask);
+
+            Debug.Log($"[Server - Sender: {clientId}] Saldırı yapıldı. Origin: {attackOrigin}, Radius: {attackRadius}, LayerMask: {LayerMask.LayerToName(playerLayer)}, Vurulan Collider Sayısı: {hits.Length}");
+
+            foreach (Collider2D hit in hits)
             {
-                int weaponDamage = weaponsScript.weaponData.damage;
-                int totalDamage = CalculateTotalDamage(weaponDamage);
+                // Detaylı log ekle
+                Debug.Log($"[Server - Sender: {clientId}] Hit: {hit.gameObject.name}, Layer: {LayerMask.LayerToName(hit.gameObject.layer)}, Tag: {hit.tag}, Is Trigger: {hit.isTrigger}");
 
-                Debug.Log($"[Server - Sender: {clientId}] Oyuncu {targetCharacter.OwnerClientId} ({hit.gameObject.name}) vuruldu. Hasar: {totalDamage}");
+                if (hit.gameObject == gameObject) continue;
 
-                targetCharacter.ReceiveDamageServerRpc(totalDamage);
+                KarakterHareket targetCharacter = hit.GetComponent<KarakterHareket>();
+                if (targetCharacter != null && targetCharacter.IsSpawned)
+                {
+                    int weaponDamage = weaponsScript.weaponData.damage;
+                    int totalDamage = CalculateTotalDamage(weaponDamage);
+
+                    Debug.Log($"[Server - Sender: {clientId}] Oyuncu {targetCharacter.OwnerClientId} ({hit.gameObject.name}) vuruldu. Hasar: {totalDamage}");
+
+                    targetCharacter.ReceiveDamageServerRpc(totalDamage);
+                }
+                else
+                {
+                     Debug.LogWarning($"[Server - Sender: {clientId}] Vurulan collider ({hit.name}) KarakterHareket bileşenine sahip değil veya spawn edilmemiş.");
+                }
+            }
+        }
+    }
+
+    private void HandleRangedWeaponAttack(string weaponName, ulong clientId)
+    {
+        // Silah tipine göre uygun mermi prefabını belirle
+        GameObject bulletPrefab = null;
+        
+        if (weaponName == "Pistol" && weaponsScript.pistolPrefab != null)
+        {
+            bulletPrefab = weaponsScript.pistolBulletPrefab;
+            Debug.Log($"[Server - Sender: {clientId}] Pistol için bulletPrefab: {(bulletPrefab != null ? bulletPrefab.name : "null")}");
+        }
+        else if (weaponName == "Rifle" && weaponsScript.riflePrefab != null)
+        {
+            bulletPrefab = weaponsScript.rifleBulletPrefab;
+            Debug.Log($"[Server - Sender: {clientId}] Rifle için bulletPrefab: {(bulletPrefab != null ? bulletPrefab.name : "null")}");
+        }
+        else if (weaponName == "Bow")
+        {
+            bulletPrefab = weaponsScript.arrowPrefab;
+            Debug.Log($"[Server - Sender: {clientId}] Bow için bulletPrefab: {(bulletPrefab != null ? bulletPrefab.name : "null")}");
+        }
+        
+        if (bulletPrefab == null)
+        {
+            Debug.LogError($"[Server - Sender: {clientId}] {weaponName} için mermi prefabı bulunamadı!");
+            return;
+        }
+        
+        // NetworkObject bileşeni kontrolü
+        NetworkObject bulletNetworkObj = bulletPrefab.GetComponent<NetworkObject>();
+        if (bulletNetworkObj == null)
+        {
+            Debug.LogError($"[Server - Sender: {clientId}] {weaponName} mermi prefabında NetworkObject bileşeni yok! Lütfen prefaba NetworkObject ekleyin.");
+            return;
+        }
+        
+        // Merminin başlangıç pozisyonu (silahın ucu)
+        Vector3 spawnPosition = weaponObject.transform.position;
+        
+        // Merminin yönü (karakterin baktığı yön)
+        Vector3 direction = new Vector3(transform.localScale.x, 0, 0).normalized;
+        
+        // Mermiyi oluştur
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+        
+        // Mermi nesnesini ağda görünür yap
+        NetworkObject bulletNetObj = bullet.GetComponent<NetworkObject>();
+        if (bulletNetObj != null)
+        {
+            try {
+                bulletNetObj.Spawn();
+                Debug.Log($"[Server - Sender: {clientId}] {weaponName} için mermi ağda spawn edildi.");
+            } 
+            catch (System.Exception e) {
+                Debug.LogError($"[Server - Sender: {clientId}] Mermi spawn edilirken hata: {e.Message}");
+                Destroy(bullet);
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogError($"[Server - Sender: {clientId}] Mermi nesnesinde NetworkObject bileşeni bulunamadı!");
+        }
+        
+        // Mermi hareketini başlat
+        Bullet bulletComponent = bullet.GetComponent<Bullet>();
+        if (bulletComponent != null)
+        {
+            bulletComponent.Initialize(direction, CalculateTotalDamage(weaponsScript.weaponData.damage), gameObject);
+            Debug.Log($"[Server - Sender: {clientId}] Mermi başlatıldı. Yön: {direction}, Hasar: {weaponsScript.weaponData.damage}");
+        }
+        else
+        {
+            // Eğer özel Bullet bileşeni yoksa, basit bir hareket ekleyelim
+            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+            if (bulletRb != null)
+            {
+                float bulletSpeed = 10f;
+                bulletRb.velocity = direction * bulletSpeed;
+                Debug.Log($"[Server - Sender: {clientId}] Mermi fizik ile hareket ettiriliyor. Hız: {bulletSpeed}");
+                
+                // Otomatik yok etme için coroutine başlat
+                StartCoroutine(DestroyBulletAfterTime(bullet, 5f));
             }
             else
             {
-                 Debug.LogWarning($"[Server - Sender: {clientId}] Vurulan collider ({hit.name}) KarakterHareket bileşenine sahip değil veya spawn edilmemiş.");
+                Debug.LogError($"[Server - Sender: {clientId}] Mermi nesnesinde Rigidbody2D bileşeni bulunamadı!");
             }
         }
     }
 
     IEnumerator AttackCooldown()
     {
+        // AttackSpeed değerini doğrudan saniye cinsinden bekleme süresi olarak kullan
         float currentAttackSpeed = (weaponsScript != null && weaponsScript.weaponData != null && weaponsScript.weaponData.attackSpeed > 0) 
                                    ? weaponsScript.weaponData.attackSpeed 
                                    : this.attackSpeed; 
-        float cooldownDuration = 1.0f / (currentAttackSpeed > 0 ? currentAttackSpeed : 1.0f);
+        
+        // Artık 1.0f'e bölmeye gerek yok, doğrudan süre olarak kullan
+        float cooldownDuration = currentAttackSpeed;
+        
         yield return new WaitForSeconds(cooldownDuration);
         canAttack = true;
         Debug.Log($"[Server] Attack cooldown bitti ({cooldownDuration}s). Tekrar saldırılabilir.");
@@ -314,14 +437,32 @@ public class KarakterHareket : NetworkBehaviour
     [ClientRpc]
     void TriggerAttackAnimationClientRpc(string triggerName)
     {
+        // Silah animatörünün güncel olduğundan emin olalım
+        if (weaponAnimator == null && weaponObject != null)
+        {
+            weaponAnimator = weaponObject.GetComponent<Animator>();
+            Debug.LogWarning($"[Client {NetworkManager.Singleton.LocalClientId}] weaponAnimator null olduğu için otomatik olarak alındı.");
+        }
+        
         if (weaponAnimator != null) 
         {
             weaponAnimator.SetTrigger(triggerName);
-             Debug.Log($"[Client {NetworkManager.Singleton.LocalClientId}] Silah animasyonu tetiklendi: {triggerName} (Animator: {weaponAnimator.name})");
+            Debug.Log($"[Client {NetworkManager.Singleton.LocalClientId}] Silah animasyonu tetiklendi: {triggerName} (Animator: {weaponAnimator.name})");
         }
         else
         {
-             Debug.LogError($"[Client {NetworkManager.Singleton.LocalClientId}] weaponAnimator bulunamadı, silah animasyonu tetiklenemiyor: {triggerName}");
+            Debug.LogError($"[Client {NetworkManager.Singleton.LocalClientId}] weaponAnimator bulunamadı, silah animasyonu tetiklenemiyor: {triggerName}");
+            
+            // Düzeltmeye çalış: Silah nesnesindeki WeaponsScript üzerindeki animator'ı kullan
+            if (weaponsScript != null)
+            {
+                Animator weaponScriptAnimator = weaponObject.GetComponent<Animator>();
+                if (weaponScriptAnimator != null)
+                {
+                    weaponScriptAnimator.SetTrigger(triggerName);
+                    Debug.Log($"[Client {NetworkManager.Singleton.LocalClientId}] Alternatif animator (WeaponsScript üzerindeki) kullanılarak animasyon tetiklendi.");
+                }
+            }
         }
     }
 
@@ -541,10 +682,6 @@ public class KarakterHareket : NetworkBehaviour
 
             Debug.Log($"Statlar sıfırlandı -> Gold: {gold}, Health: {CharHealth}, AttackDamage: {attackDamage}");
         }
-        else
-        {
-            Debug.LogError("DefaultCharacterStats referansı atanmamış!");
-        }
     }
 
     public void UpdateHealthBar()
@@ -559,13 +696,97 @@ public class KarakterHareket : NetworkBehaviour
         if (weaponsScript == null)
         {
             Debug.LogError("WeaponsScript referansı bulunamadı!");
-            return;
+            if (weaponObject != null)
+            {
+                weaponsScript = weaponObject.GetComponent<WeaponsScript>();
+                if (weaponsScript == null)
+                {
+                    Debug.LogError("Weapon objesi üzerinde WeaponsScript bulunamadı!");
+                    return;
+                }
+                else
+                {
+                    Debug.Log("WeaponsScript referansı otomatik olarak alındı");
+                }
+            }
+            else
+            {
+                Debug.LogError("weaponObject null, WeaponsScript bulunamıyor!");
+                return;
+            }
         }
-        weaponsScript.weaponData = weaponData;
+        
+        // Weapon data atama ve silah nesnelerini yönetme
+        weaponsScript.SetWeaponData(weaponData);
+        
+        // Sprite güncelleme
         SpriteRenderer weaponRenderer = weaponObject.GetComponent<SpriteRenderer>();
         if (weaponRenderer != null && weaponData.weaponIcon != null)
         {
             weaponRenderer.sprite = weaponData.weaponIcon;
+            Debug.Log($"{weaponData.weaponName} için sprite güncellendi: {weaponData.weaponIcon.name}");
+        }
+        else
+        {
+            Debug.LogWarning("weaponRenderer veya weaponData.weaponIcon null!");
+        }
+
+        // Weapon animator referansını güncelleme
+        weaponAnimator = weaponObject.GetComponent<Animator>();
+        if (weaponAnimator == null)
+        {
+            Debug.LogError("Weapon Animator bulunamadı!");
+        }
+        else
+        {
+            Debug.Log($"Weapon Animator güncellendi: {weaponAnimator.name}");
+            
+            // AnimatorController kontrolü
+            if (weaponAnimator.runtimeAnimatorController != null)
+            {
+                Debug.Log($"Animator controller: {weaponAnimator.runtimeAnimatorController.name}");
+                
+                // İlgili prefabları kontrol et
+                if (weaponData.weaponName == "Rifle" || weaponData.weaponName == "Pistol")
+                {
+                    Debug.Log($"{weaponData.weaponName} için prefab kontrolü yapılıyor");
+                    
+                    // Riffle prefab kontrol
+                    if (weaponData.weaponName == "Rifle" && weaponsScript.riflePrefab != null)
+                    {
+                        Animator rifleAnimator = weaponsScript.riflePrefab.GetComponent<Animator>();
+                        if (rifleAnimator != null && rifleAnimator.runtimeAnimatorController != null)
+                        {
+                            Debug.Log($"Rifle prefab animator controller: {rifleAnimator.runtimeAnimatorController.name}");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Rifle prefab animator controller yok!");
+                        }
+                    }
+                    
+                    // Pistol prefab kontrol
+                    if (weaponData.weaponName == "Pistol" && weaponsScript.pistolPrefab != null)
+                    {
+                        Animator pistolAnimator = weaponsScript.pistolPrefab.GetComponent<Animator>();
+                        if (pistolAnimator != null && pistolAnimator.runtimeAnimatorController != null)
+                        {
+                            Debug.Log($"Pistol prefab animator controller: {pistolAnimator.runtimeAnimatorController.name}");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Pistol prefab animator controller yok!");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("Weapon Animator'da RuntimeAnimatorController yok!");
+            }
+            
+            // Silah türüne göre ilgili parametreleri ayarla
+            weaponAnimator.SetTrigger("Reset");
         }
 
         Debug.Log($"Yeni Silah Donatıldı: {weaponData.weaponName}");
@@ -577,7 +798,6 @@ public class KarakterHareket : NetworkBehaviour
         {
             if (IsServer) 
             {
-                Debug.Log("[Server] Yere temas algılandı. Zıplama sayacı sıfırlanıyor.");
                 jumpCounter = 0;
             }
         }
@@ -626,6 +846,24 @@ public class KarakterHareket : NetworkBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             isTakingDamage = false;
+        }
+    }
+
+    IEnumerator DestroyBulletAfterTime(GameObject bullet, float time)
+    {
+        yield return new WaitForSeconds(time);
+        
+        if (bullet != null)
+        {
+            NetworkObject bulletNetObj = bullet.GetComponent<NetworkObject>();
+            if (bulletNetObj != null && bulletNetObj.IsSpawned)
+            {
+                bulletNetObj.Despawn();
+            }
+            else
+            {
+                Destroy(bullet);
+            }
         }
     }
 }

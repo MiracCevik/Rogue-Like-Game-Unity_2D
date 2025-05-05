@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3593e9be3bae9043a37ff96c7dc0927, type: 3}
+  m_Name: Sycthe
+  m_EditorClassIdentifier: 
+  weaponName: Sycthe
+  weaponIcon: {fileID: 21300000, guid: b1cb02ecff1345af980f6cc88c9f2169, type: 3}
+  damage: 40
+  attackSpeed: 1
+  normalAttackTrigger: ScytheAttack
+  weaponType: 5

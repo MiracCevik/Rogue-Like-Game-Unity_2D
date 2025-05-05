@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1926713656329148623}
   - component: {fileID: 1926713656329148464}
   - component: {fileID: 6029432128176789740}
+  - component: {fileID: 280263074025432359}
   - component: {fileID: -3325939873840171840}
   - component: {fileID: 23801974037805472}
   m_Layer: 9
@@ -122,6 +123,27 @@ CapsuleCollider2D:
   m_Offset: {x: -0.117014006, y: 0.008240297}
   m_Size: {x: 1.2939125, y: 0.20508525}
   m_Direction: 1
+--- !u!114 &280263074025432359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926713656329148465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 840675039
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &-3325939873840171840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +159,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 605c9aba1ddbb034b95d5c202370cf9a, type: 2}
   speed: 10
   lifetime: 5
+  isFacingRight: 1
 --- !u!50 &23801974037805472
 Rigidbody2D:
   serializedVersion: 4

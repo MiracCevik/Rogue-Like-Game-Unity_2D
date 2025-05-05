@@ -38,7 +38,7 @@ public class WeaponCard : MonoBehaviour
         if (player != null)
         {
             player.EquipWeapon(weaponData);
-            Debug.Log($"{weaponData.weaponName} seçildi ve karaktere donatýldý!");
+            Debug.Log($"{weaponData.weaponName} seï¿½ildi ve karaktere donatï¿½ldï¿½!");
 
             SaveManager saveManager = FindObjectOfType<SaveManager>();
             if (saveManager != null)
@@ -48,12 +48,12 @@ public class WeaponCard : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("SaveManager bulunamadý!");
+                Debug.LogWarning("SaveManager bulunamadï¿½!");
             }
         }
         else
         {
-            Debug.LogWarning("Karakter bulunamadý!");
+            Debug.LogWarning("Karakter bulunamadï¿½!");
         }
 
         CloseChest();
@@ -64,12 +64,12 @@ public class WeaponCard : MonoBehaviour
         ChestController chestController = FindObjectOfType<ChestController>();
         if (chestController != null)
         {
-            Debug.Log("weaponcard içindeki close chest");
+            Debug.Log("weaponcard iï¿½indeki close chest");
             chestController.CloseChest();
         }
         else
         {
-            Debug.LogWarning("ChestController bulunamadý!");
+            Debug.LogWarning("ChestController bulunamadï¿½!");
         }
     }
 }

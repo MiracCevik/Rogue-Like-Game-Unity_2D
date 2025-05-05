@@ -27,7 +27,7 @@ public class ChestController : MonoBehaviour
     {
         if (weaponUIPanel == null || weaponCardPrefab == null || weaponCardContainer == null)
         {
-            Debug.LogError("Referanslar eksik! Lütfen kontrol edin.");
+            Debug.LogError("Referanslar eksik! Lï¿½tfen kontrol edin.");
             return;
         }
 
@@ -75,7 +75,7 @@ public class ChestController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("weaponCardContainer referansý eksik!");
+            Debug.LogWarning("weaponCardContainer referansï¿½ eksik!");
         }
 
         if (chestAnimator != null)
@@ -96,7 +96,7 @@ public class ChestController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("weaponCardContainer referansý eksik!");
+            Debug.LogWarning("weaponCardContainer referansï¿½ eksik!");
         }
     }
 
