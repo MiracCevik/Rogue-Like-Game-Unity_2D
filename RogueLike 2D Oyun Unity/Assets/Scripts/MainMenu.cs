@@ -10,15 +10,26 @@ public class MainMenu : MonoBehaviour
 
     public void PlaySinglePlayer()
     {
-        if (NetworkManager.Singleton != null)
+        if (GameManager.Instance != null)
         {
-            NetworkManager.Singleton.Shutdown();
+            GameManager.Instance.CleanupNetworkManager();
+            GameManager.Instance.StartLocalHostMode();
+            SceneManager.LoadScene(gameSceneName);
         }
-        SceneManager.LoadScene(gameSceneName);
+        else
+        {
+            if (NetworkManager.Singleton != null)
+            {
+                NetworkManager.Singleton.Shutdown();
+            }
+            SceneManager.LoadScene(gameSceneName);
+        }
     }
 
     public void ShowMultiplayerOptions()
     {
+
+        SceneManager.LoadScene("OnlineMap");
         mainMenuPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
     }
@@ -31,13 +42,31 @@ public class MainMenu : MonoBehaviour
 
     public void HostGame()
     {
-        NetworkManager.Singleton.StartHost();
-        SceneManager.LoadScene("Base");
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StartLocalHostMode();
+            SceneManager.LoadScene(gameSceneName);
+        }
+        else
+        {
+            Debug.LogError("GameManager bulunamadı!");
+            NetworkManager.Singleton.StartHost();
+            SceneManager.LoadScene(gameSceneName);
+        }
     }
 
     public void JoinGame()
     {
-        NetworkManager.Singleton.StartClient();
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StartClientMode();
+            SceneManager.LoadScene(gameSceneName);
+        }
+        else
+        {
+            Debug.LogError("GameManager bulunamadı!");
+            NetworkManager.Singleton.StartClient();
+        }
     }
 }
 

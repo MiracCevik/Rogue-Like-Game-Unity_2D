@@ -21,6 +21,12 @@ public class WeaponsScript : NetworkBehaviour
 
     private bool canShoot = true;
 
+    // Offline (local host) modunda olup olmadığımızı kontrol et
+    private bool IsOfflineMode()
+    {
+        return GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
+    }
+
     void Start()
     {
         hitbox = GetComponent<Collider2D>();
@@ -88,9 +94,11 @@ public class WeaponsScript : NetworkBehaviour
             }
         }
 
-        if (!IsOwner) return;
-
-        PerformAttackServerRpc(totalDamage);
+        // Offline modda veya bu silahın sahibiyse saldırıyı gerçekleştir
+        if (IsOfflineMode() || IsOwner)
+        {
+            PerformAttackServerRpc(totalDamage);
+        }
     }
     
     [ServerRpc]
@@ -195,7 +203,8 @@ public class WeaponsScript : NetworkBehaviour
     {
         if (!canShoot || weaponData == null) return;
 
-        if (IsOwner)
+        // Offline modda veya bu silahın sahibiyse ateş et
+        if (IsOfflineMode() || IsOwner)
         {
             ShootServerRpc();
             
@@ -246,6 +255,18 @@ public class WeaponsScript : NetworkBehaviour
             return;
         }
 
+        // Get the client ID that requested the shot
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        
+        // Find the character controller from the parent
+        KarakterHareket characterController = transform.GetComponentInParent<KarakterHareket>();
+        if (characterController == null || characterController.OwnerClientId != clientId)
+        {
+            Debug.LogWarning($"Client {clientId} attempted to shoot with a weapon they don't own!");
+            canShoot = true;
+            return;
+        }
+        
         ActivateWeaponClientRpc(weaponTypeStr);
 
         if (bulletPrefab != null && firePoint != null)

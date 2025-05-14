@@ -12,7 +12,6 @@ public class SkillIconController : MonoBehaviour
     public void Initialize(SkillData skillData)
     {
         skillIcon.sprite = skillData.icon;
-        Debug.Log($"Skill {skillData.skillName} için sprite atanýyor: {skillData.icon}");
         gameObject.SetActive(skillData.isUnlocked); 
     }
 

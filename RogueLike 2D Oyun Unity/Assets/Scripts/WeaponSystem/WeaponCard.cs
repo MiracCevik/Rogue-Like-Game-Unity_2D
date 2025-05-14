@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.UI;
 
 public class WeaponCard : MonoBehaviour
@@ -34,26 +35,40 @@ public class WeaponCard : MonoBehaviour
         {
             card.gameObject.SetActive(false);
         }
-        KarakterHareket player = FindObjectOfType<KarakterHareket>();
-        if (player != null)
-        {
-            player.EquipWeapon(weaponData);
-            Debug.Log($"{weaponData.weaponName} se�ildi ve karaktere donat�ld�!");
 
-            SaveManager saveManager = FindObjectOfType<SaveManager>();
-            if (saveManager != null)
+        KarakterHareket[] allPlayers = FindObjectsOfType<KarakterHareket>();
+        
+        KarakterHareket localPlayer = null;
+        foreach (KarakterHareket player in allPlayers)
+        {
+            if (player.IsOwner)
             {
-                saveManager.SaveGame();
-                Debug.Log("Oyun kaydedildi.");
+                localPlayer = player;
+                break;
+            }
+        }
+
+        if (localPlayer != null)
+        {
+            
+            if (NetworkManager.Singleton.IsListening)
+            {
+                string weaponName = weaponData.weaponName;
+                int damage = weaponData.damage;
+                float attackSpeed = weaponData.attackSpeed;
+                int weaponTypeInt = (int)weaponData.weaponType;
+                
+                localPlayer.EquipWeaponServerRpc(weaponName, damage, attackSpeed, weaponTypeInt);
             }
             else
             {
-                Debug.LogWarning("SaveManager bulunamad�!");
+                localPlayer.EquipWeapon(weaponData);
+                SaveManager saveManager = FindObjectOfType<SaveManager>();
+                if (saveManager != null)
+                {
+                    saveManager.SaveGame();
+                }
             }
-        }
-        else
-        {
-            Debug.LogWarning("Karakter bulunamad�!");
         }
 
         CloseChest();
@@ -64,12 +79,7 @@ public class WeaponCard : MonoBehaviour
         ChestController chestController = FindObjectOfType<ChestController>();
         if (chestController != null)
         {
-            Debug.Log("weaponcard i�indeki close chest");
             chestController.CloseChest();
-        }
-        else
-        {
-            Debug.LogWarning("ChestController bulunamad�!");
         }
     }
 }

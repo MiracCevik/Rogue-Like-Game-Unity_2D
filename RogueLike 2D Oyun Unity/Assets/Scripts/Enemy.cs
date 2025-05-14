@@ -29,6 +29,11 @@ public class Enemies : NetworkBehaviour
     private string fileName = "EnemyStats.json";
     private bool isShooting;
 
+    private bool IsOfflineMode()
+    {
+        return GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
+    }
+
     void Awake()
     {
         if (!NetworkManager.Singleton.IsListening)
@@ -67,16 +72,9 @@ public class Enemies : NetworkBehaviour
         if (player != null)
         {
             karakterRef = player.GetComponent<KarakterHareket>();
-            if (karakterRef == null)
-            {
-                Debug.LogWarning("KarakterHareket bileeni bulunamad!");
-            }
+           
         }
-        else
-        {
-            Debug.LogWarning("Player bulunamad!");
-        }
-
+      
         if (attackRange == null)
         {
             attackRange = GetComponent<AttackRange>();
@@ -90,7 +88,7 @@ public class Enemies : NetworkBehaviour
 
     void Update()
     {
-        if (!NetworkManager.Singleton.IsListening)
+        if (!NetworkManager.Singleton.IsListening || IsOfflineMode())
         {
             UpdateEnemyBehavior();
             return;
@@ -184,21 +182,21 @@ public class Enemies : NetworkBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!IsServer) return;
-
-        WeaponsScript weaponScript = collision.GetComponent<WeaponsScript>();
-        if (collision.CompareTag("Weapon"))
+        if (IsOfflineMode() || IsServer)
         {
-
-            if (weaponScript != null)
+            WeaponsScript weaponScript = collision.GetComponent<WeaponsScript>();
+            if (collision.CompareTag("Weapon"))
             {
-                int weaponDamage = weaponScript.weaponData != null ? weaponScript.weaponData.damage : 0;
-                TakeDamageServerRpc(weaponDamage);
+                if (weaponScript != null)
+                {
+                    int weaponDamage = weaponScript.weaponData != null ? weaponScript.weaponData.damage : 0;
+                    TakeDamageServerRpc(weaponDamage);
+                }
             }
-        }
 
-        if (collision.CompareTag("Player"))
-        {
+            if (collision.CompareTag("Player"))
+            {
+            }
         }
     }
 
@@ -206,7 +204,6 @@ public class Enemies : NetworkBehaviour
     public void TakeDamageServerRpc(int damage)
     {
         currentHealth -= damage;
-        Debug.Log("damage: " + damage);
         currentHealth = Mathf.Clamp(currentHealth, 0, enemyStats.enemyHealth);
         networkHealth.Value = currentHealth;
         UpdateHealthBar();
@@ -245,51 +242,77 @@ public class Enemies : NetworkBehaviour
         {
             float healthRatio = (float)currentHealth / enemyStats.enemyHealth;
             greenHealthBar.rectTransform.localScale = new Vector3(healthRatio, 1, 1);
-            Debug.Log("enemy can  " + currentHealth);
             redHealthBar.enabled = currentHealth < enemyStats.enemyHealth;
         }
     }
 
     void Die()
     {
-        if (!IsServer) return;
-
-        karakterRef.gold += enemyStats.rewards;
-        Debug.Log("Karakter Altn: " + karakterRef.gold);
-        SkillTreeManager skillTreeManager = FindObjectOfType<SkillTreeManager>();
-        if (skillTreeManager != null)
+        if (IsOfflineMode() || IsServer)
         {
-            skillTreeManager.UpdateGoldUI(karakterRef.gold);
+            
+            if (IsServer && gameObject != null && gameObject.GetComponent<NetworkObject>() != null)
+            {
+                GetComponent<NetworkObject>().Despawn();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-
-        SaveManager.Instance.SaveGame();
-        NetworkObject networkObject = GetComponent<NetworkObject>();
-        networkObject.Despawn();
     }
-
     public void SaveEnemyData()
     {
-        if (enemyStats != null)
+        if (enemyStats == null) return;
+
+        EnemyData data = new EnemyData
         {
-            string json = JsonUtility.ToJson(enemyStats, true);
-            string path = Path.Combine(Application.persistentDataPath, fileName);
-            File.WriteAllText(path, json);
-        }
-        else
-        {
-            Debug.LogError("Kaydedilecek EnemyStats bulunamad!");
-        }
+            enemyName = enemyStats.enemyName,
+            enemyHealth = enemyStats.enemyHealth,
+            enemyDamage = enemyStats.enemyDamage,
+            attackSpeed = enemyStats.attackSpeed,
+            attackRange = enemyStats.attackRange,
+            moveSpeed = enemyStats.moveSpeed,
+            currentHealth = currentHealth
+        };
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.persistentDataPath + "/" + fileName, json);
     }
 
-    void LoadEnemyData()
+    public void LoadEnemyData()
     {
-        string path = Path.Combine(Application.persistentDataPath, fileName);
+        string path = Application.persistentDataPath + "/" + fileName;
 
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            JsonUtility.FromJsonOverwrite(json, enemyStats);
+            EnemyData data = JsonUtility.FromJson<EnemyData>(json);
+
+            if (enemyStats == null)
+            {
+                enemyStats = ScriptableObject.CreateInstance<EnemyStats>();
+            }
+
+            enemyStats.enemyName = data.enemyName;
+            enemyStats.enemyHealth = data.enemyHealth;
+            enemyStats.enemyDamage = data.enemyDamage;
+            enemyStats.attackSpeed = data.attackSpeed;
+            enemyStats.attackRange = data.attackRange;
+            enemyStats.moveSpeed = data.moveSpeed;
+            currentHealth = data.currentHealth;
         }
     }
+}
 
+[System.Serializable]
+public class EnemyData
+{
+    public string enemyName;
+    public int enemyHealth;
+    public int enemyDamage;
+    public float attackSpeed;
+    public float attackRange;
+    public float moveSpeed;
+    public int currentHealth;
 }

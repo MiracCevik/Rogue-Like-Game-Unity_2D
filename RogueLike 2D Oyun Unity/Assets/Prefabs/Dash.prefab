@@ -89,3 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 7210290560534649318}
+  grayscaleMaterial: {fileID: 2100000, guid: 6e6e63be5bd5f474484c79f8e1b92d51, type: 2}

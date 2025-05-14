@@ -14,6 +14,12 @@ public class AttackRange : NetworkBehaviour
     private bool isAttacking = false;
     private bool isFacingRight;
 
+    // Offline (local host) modunda olup olmadığımızı kontrol et
+    private bool IsOfflineMode()
+    {
+        return GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
+    }
+
     void Start()
     {
         if (enemy == null) enemy = transform.parent?.gameObject;
@@ -36,12 +42,14 @@ public class AttackRange : NetworkBehaviour
 
     void Update()
     {
-        if (!IsServer) return;
+        // Offline modda veya server ise çalışsın
+        if (!IsOfflineMode() && !IsServer) return;
     }
 
     public void MoveTowardsPlayer(Transform targetPlayer)
     {
-        if (!IsServer || targetPlayer == null || enemy == null || stats == null) return;
+        // Offline modda veya server ise düşman hareketlerini yönet
+        if (!IsOfflineMode() && !IsServer || targetPlayer == null || enemy == null || stats == null) return;
 
         float distance = Vector2.Distance(enemy.transform.position, targetPlayer.position);
 
@@ -60,58 +68,59 @@ public class AttackRange : NetworkBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {   
-        if (!IsServer) return;
-
-        if (collision.CompareTag("Player"))
+        // Offline modda veya server ise çarpışma tespiti yapsın
+        if (!IsOfflineMode() && !IsServer) return;
+        
+        // Eğer çarpışan nesne oyuncu ise ve saldırı durumunda değilsek
+        if (collision.CompareTag("Player") && !isAttacking)
         {
-            if (!isAttacking)
+            KarakterHareket player = collision.GetComponent<KarakterHareket>();
+            if (player != null)
             {
-                KarakterHareket targetCharacter = collision.GetComponent<KarakterHareket>();
-                if (targetCharacter != null)
-                {
-                    StartCoroutine(Attack(targetCharacter));
-                }
+                isAttacking = true;
+                StartCoroutine(AttackPlayer(player));
             }
         }
     }
 
-    private IEnumerator Attack(KarakterHareket targetCharacter)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        isAttacking = true; 
-
-        if (targetCharacter != null && targetCharacter.IsSpawned && stats != null && animator != null)
+        // Oyuncu saldırı alanından çıkınca saldırıyı durdur
+        if (collision.CompareTag("Player"))
         {
-            int damageToApply = stats.enemyDamage;
-            if (damageToApply > 0)
+            isAttacking = false;
+        }
+    }
+
+    private IEnumerator AttackPlayer(KarakterHareket player)
+    {
+        // Düşman saldırı aralığı
+        float attackInterval = stats != null ? 1f / stats.attackSpeed : 1f;
+        
+        while (isAttacking)
+        {
+            // Animasyon tetikle
+            if (animator != null)
             {
-                targetCharacter.ReceiveDamageServerRpc(damageToApply); 
-            
                 animator.SetTrigger("Attack");
             }
             
-            float attackCooldown = (stats.attackSpeed > 0) ? (1.0f / stats.attackSpeed) : 1.0f;
-            yield return new WaitForSeconds(attackCooldown);
+            // Hasar ver
+            int damage = stats != null ? stats.enemyDamage : 10;
+            player.TakeDamage(damage);
+            
+            // Saldırı aralığı kadar bekle
+            yield return new WaitForSeconds(attackInterval);
         }
-       
-
-        isAttacking = false; 
     }
 
-    public void Flip()
+    private void Flip()
     {
-        if (enemy == null) return;
-
-        isFacingRight = !isFacingRight;
-        Vector3 localScale = enemy.transform.localScale;
-        localScale.x *= -1;
-        enemy.transform.localScale = localScale;
-        
-        Transform canvasTransform = enemy.transform.Find("Canvas"); 
-        if (canvasTransform != null)
+        if (enemy != null)
         {
-            Vector3 canvasScale = canvasTransform.localScale;
-            canvasScale.x = Mathf.Abs(canvasScale.x) * Mathf.Sign(enemy.transform.localScale.x);
-            canvasTransform.localScale = canvasScale;
+            Vector3 currentScale = enemy.transform.localScale;
+            currentScale.x *= -1;
+            enemy.transform.localScale = currentScale;
         }
     }
 }

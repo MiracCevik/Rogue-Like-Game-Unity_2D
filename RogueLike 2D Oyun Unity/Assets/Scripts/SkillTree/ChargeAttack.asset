@@ -17,6 +17,6 @@ MonoBehaviour:
   isUnlocked: 1
   chargeTime: 0.5
   damageMultiplier: 2
-  cooldown: 3
+  cooldown: 1
   skillType: 0
   icon: {fileID: 21300000, guid: 07277cabb1ab9164b9c7dc4b7aa5241b, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: AoEAttack
   cost: 500
   isUnlocked: 1
-  chargeTime: 0
+  chargeTime: 1
   damageMultiplier: 5
   cooldown: 10
   skillType: 1

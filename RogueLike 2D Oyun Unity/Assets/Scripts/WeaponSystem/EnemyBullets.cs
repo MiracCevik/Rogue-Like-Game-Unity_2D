@@ -15,7 +15,11 @@ public class EnemyBullets : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!IsServer) return;
+        // In single player mode, we still want to process damage
+        bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
+        
+        // Only check IsServer in online mode
+        if (!isOfflineMode && !IsServer) return;
 
         if (collision.CompareTag("Player"))
         {
@@ -28,7 +32,7 @@ public class EnemyBullets : NetworkBehaviour
                     return;
                 }
 
-                karakter.ReceiveDamageServerRpc(damageToApply);
+                karakter.TakeDamage(damageToApply);
 
                 Destroy(gameObject);
             }

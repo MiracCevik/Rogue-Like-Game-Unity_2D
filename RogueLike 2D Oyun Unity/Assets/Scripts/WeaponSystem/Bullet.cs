@@ -10,23 +10,19 @@ public class Bullet : NetworkBehaviour
     private int bulletDamage;
     private GameObject owner;
 
-    public bool isFacingRight = true;
+    public NetworkVariable<bool> isFacingRight = new NetworkVariable<bool>(true);
+
+    public NetworkVariable<Vector2> netDirection = new NetworkVariable<Vector2>();
 
     public void Initialize(Vector3 direction, int damage, GameObject bulletOwner)
     {
         moveDirection = new Vector2(direction.x, direction.y).normalized;
         bulletDamage = damage;
         owner = bulletOwner;
-        
-        if (direction.x < 0)
+        if (IsServer)
         {
-            transform.localScale = new Vector3(-1, 1, 1); 
-            isFacingRight = false;
-        }
-        else
-        {
-            transform.localScale = new Vector3(1, 1, 1); 
-            isFacingRight = true;
+            netDirection.Value = moveDirection;
+            isFacingRight.Value = direction.x >= 0;
         }
     }
 
@@ -39,15 +35,9 @@ public class Bullet : NetworkBehaviour
     {
         moveDirection = direction.normalized;
 
-        if (direction.x < 0)
+        if (IsServer)
         {
-            transform.localScale = new Vector3(-1, 1, 1); 
-            isFacingRight = false;
-        }
-        else
-        {
-            transform.localScale = new Vector3(1, 1, 1); 
-            isFacingRight = true;
+            isFacingRight.Value = direction.x >= 0;
         }
     }
 
@@ -63,20 +53,19 @@ public class Bullet : NetworkBehaviour
 
     void Update()
     {
-        if (moveDirection != Vector2.zero)
-        {
-            transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-        }
-        else
-        {
-            Vector3 defaultDirection = transform.localScale.x > 0 ? Vector3.right : Vector3.left;
-            transform.Translate(defaultDirection * speed * Time.deltaTime, Space.World);
-        }
+        Vector2 dir = netDirection.Value != Vector2.zero ? netDirection.Value : moveDirection;
+        transform.Translate(dir * speed * Time.deltaTime, Space.World);
+        
+        transform.localScale = new Vector3(isFacingRight.Value ? 1 : -1, 1, 1);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!IsServer) return;
+        // In single player mode, we still want to process damage
+        bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
+        
+        // Only check IsServer in online mode
+        if (!isOfflineMode && !IsServer) return;
         
         if (collision.CompareTag("Enemy"))
         {   
@@ -84,7 +73,16 @@ public class Bullet : NetworkBehaviour
             if (enemy != null)
             {
                 int damage = bulletDamage > 0 ? bulletDamage : (weaponData != null ? weaponData.damage : 10);
-                enemy.TakeDamageServerRpc(damage);
+                
+                // In offline mode, call directly the damage method if available
+                if (isOfflineMode && enemy.GetType().GetMethod("TakeDamage") != null)
+                {
+                    enemy.SendMessage("TakeDamage", damage);
+                }
+                else
+                {
+                    enemy.TakeDamageServerRpc(damage);
+                }
             }
             
             DestroyBullet();
@@ -97,7 +95,7 @@ public class Bullet : NetworkBehaviour
             if (player != null)
             {
                 int damage = bulletDamage > 0 ? bulletDamage : (weaponData != null ? weaponData.damage : 10);
-                player.ReceiveDamageServerRpc(damage);
+                player.TakeDamage(damage);
             }
             
             DestroyBullet();

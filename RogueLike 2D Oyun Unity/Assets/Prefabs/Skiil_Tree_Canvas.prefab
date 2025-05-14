@@ -389,8 +389,8 @@ MonoBehaviour:
   skillTreePanel: {fileID: 4390608784152618575}
   AeEPrefab: {fileID: 1656606274463131757, guid: aba452f36b46c9a468906e9b959fba44, type: 3}
   goldText: {fileID: 6486320911721969822}
-  karakter: {fileID: 0}
-  character: {fileID: 0}
+  karakter: {fileID: 3490586421414246583, guid: 2da158977283e204baeaa983176e8fb8, type: 3}
+  character: {fileID: 2295579041922366104, guid: 2da158977283e204baeaa983176e8fb8, type: 3}
   skills:
   - {fileID: 11400000, guid: 75f762149f13e9f4385f55898722f727, type: 2}
   - {fileID: 11400000, guid: 842eb0442928d5b43b8803fe1d3008fe, type: 2}
