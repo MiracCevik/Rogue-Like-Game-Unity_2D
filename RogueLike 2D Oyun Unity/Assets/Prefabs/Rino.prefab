@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -1075854790282143660, guid: e3531be27cb827743bac8ea66dae5bfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.52, y: 0.34}
@@ -296,7 +296,6 @@ MonoBehaviour:
   moveSpeed: 2
   circleCollider: {fileID: 0}
   stats: {fileID: 11400000, guid: fed2125069ef4a0449dfc13d4ebae125, type: 2}
-  karakterHareket: {fileID: 0}
 --- !u!61 &3809567738054900863
 BoxCollider2D:
   m_ObjectHideFlags: 0

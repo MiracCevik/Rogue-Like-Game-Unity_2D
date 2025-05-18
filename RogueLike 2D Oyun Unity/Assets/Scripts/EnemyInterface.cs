@@ -119,7 +119,9 @@ public class RangedAttack : IEnemyAttack
 
         if (bulletPrefab == null) return;
 
-        // Düşman yönünü oyuncuya doğru çevir
+        // Düşman yönünü oyuncuya göre ayarla - Düzeltilmiş yön mantığı
+        // Eğer oyuncu düşmanın sağındaysa, düşman sağa bakmalı (pozitif scale)
+        // Eğer oyuncu düşmanın solundaysa, düşman sola bakmalı (negatif scale)
         bool shouldFaceRight = player.position.x > enemyTransform.position.x;
         bool isCurrentlyFacingRight = enemyTransform.localScale.x > 0;
         
@@ -128,10 +130,11 @@ public class RangedAttack : IEnemyAttack
             Vector3 scale = enemyTransform.localScale;
             scale.x *= -1;
             enemyTransform.localScale = scale;
+            Debug.Log($"RangedAttack: Düşman yönü değiştirildi. Oyuncu X: {player.position.x}, Düşman X: {enemyTransform.position.x}, Sağa bakmalı: {shouldFaceRight}");
         }
 
-        // Oyuncuya doğru yön hesapla
-        Vector2 direction = (player.position - enemyTransform.position).normalized;
+        // SADECE X EKSENİNDE HAREKET ET - Sadece sağa veya sola doğru
+        Vector2 direction = new Vector2(shouldFaceRight ? 1 : -1, 0);
         
         // Merminin konumunu ayarla (düşmanın önünde)
         Vector3 spawnPosition = enemyTransform.position + new Vector3(direction.x * 0.5f, 0, 0);
@@ -186,7 +189,7 @@ public class RangedAttack : IEnemyAttack
             // Mermi bileşenlerini ayarla
             EnemyBullets bulletScript = bullet.GetComponent<EnemyBullets>();
             
-            // Mermi hızını ayarla
+            // Mermi hızını ayarla - SADECE X EKSENİNDE
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
             {

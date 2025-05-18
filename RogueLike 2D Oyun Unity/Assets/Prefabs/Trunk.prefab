@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -5219337101871392587, guid: bf4df7b2c9cda4c44b372e2b47a5cb8f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.22, y: 0.18}
@@ -267,7 +267,6 @@ MonoBehaviour:
   moveSpeed: 2
   circleCollider: {fileID: 3787902679686370479}
   stats: {fileID: 11400000, guid: cb45135e68c6b584a9a47d168bcea982, type: 2}
-  karakterHareket: {fileID: 0}
 --- !u!1001 &3775734929187528549
 PrefabInstance:
   m_ObjectHideFlags: 0

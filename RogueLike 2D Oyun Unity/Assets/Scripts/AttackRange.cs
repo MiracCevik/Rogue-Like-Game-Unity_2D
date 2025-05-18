@@ -43,7 +43,8 @@ public class AttackRange : NetworkBehaviour
 
     void Update()
     {
-        // Offline modda veya server ise çalışsın
+        // Offline modda VEYA server ise çalışsın
+        // Eğer offline mod değilse VE server değilse metodu terk et
         if (!IsOfflineMode() && !IsServer) return;
         
         if (player == null)
@@ -71,18 +72,22 @@ public class AttackRange : NetworkBehaviour
             targetPlayer = player;
         }
 
-        // Offline modda veya server ise düşman hareketlerini yönet
-        if (!IsOfflineMode() && !IsServer || enemy == null || stats == null) return;
+        // Offline modda VEYA server ise düşman hareketlerini yönet
+        // Eğer offline mod değilse VE server değilse, VEYA enemy/stats null ise metodu terk et
+        if ((!IsOfflineMode() && !IsServer) || enemy == null || stats == null) return;
 
         float distance = Vector2.Distance(enemy.transform.position, targetPlayer.position);
 
-        // Düşman yönünü oyuncuya göre ayarla
+        // Düşman yönünü oyuncuya göre ayarla - Düzeltilmiş yön mantığı
+        // Eğer oyuncu düşmanın sağındaysa, düşman sağa bakmalı (pozitif scale)
+        // Eğer oyuncu düşmanın solundaysa, düşman sola bakmalı (negatif scale)
         bool shouldFaceRight = targetPlayer.position.x > enemy.transform.position.x;
         bool isCurrentlyFacingRight = enemy.transform.localScale.x > 0;
         
         if (shouldFaceRight != isCurrentlyFacingRight)
         {        
             Flip();
+            Debug.Log($"AttackRange: Düşman yönü değiştirildi. Oyuncu X: {targetPlayer.position.x}, Düşman X: {enemy.transform.position.x}, Sağa bakmalı: {shouldFaceRight}");
         }
 
         // Oyuncuya doğru yönlendirirken ideal mesafeyi koru
@@ -100,7 +105,8 @@ public class AttackRange : NetworkBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {   
-        // Offline modda veya server ise çarpışma tespiti yapsın
+        // Offline modda VEYA server ise çarpışma tespiti yapsın
+        // Eğer offline mod değilse VE server değilse metodu terk et
         if (!IsOfflineMode() && !IsServer) return;
         
         // Eğer çarpışan nesne oyuncu ise ve saldırı durumunda değilsek

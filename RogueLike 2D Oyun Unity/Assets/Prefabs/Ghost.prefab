@@ -50,7 +50,6 @@ MonoBehaviour:
   moveSpeed: 3
   circleCollider: {fileID: 5162835683490082316}
   stats: {fileID: 11400000, guid: 8122a95ce75b4794c947dc397152f0a7, type: 2}
-  karakterHareket: {fileID: 0}
 --- !u!61 &6742331425165573567
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -177,7 +176,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 4740742658319907719, guid: d4f2f936f814df24fb7559370c465cdc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.44, y: 0.3}
