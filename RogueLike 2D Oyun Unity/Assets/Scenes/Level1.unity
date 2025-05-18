@@ -506,6 +506,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 785806220
       objectReference: {fileID: 0}
+    - target: {fileID: -8393971558284559460, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1239348619
+      objectReference: {fileID: 0}
     - target: {fileID: 1674787954785085137, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.03
@@ -40302,6 +40306,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2881723528
       objectReference: {fileID: 0}
+    - target: {fileID: -8393971558284559460, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1239348619
+      objectReference: {fileID: 0}
     - target: {fileID: 1674787954785085137, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.705048
@@ -41430,7 +41438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1609144986
 Transform:
   m_ObjectHideFlags: 0
@@ -42243,6 +42251,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1727213203
       objectReference: {fileID: 0}
+    - target: {fileID: -751570741455942389, guid: 2da158977283e204baeaa983176e8fb8, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1461377457
+      objectReference: {fileID: 0}
     - target: {fileID: 2295579041922366104, guid: 2da158977283e204baeaa983176e8fb8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 133.4
@@ -42315,6 +42327,10 @@ PrefabInstance:
     - target: {fileID: -8393971558284559460, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 129112041
+      objectReference: {fileID: 0}
+    - target: {fileID: -8393971558284559460, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1239348619
       objectReference: {fileID: 0}
     - target: {fileID: 1674787954785085137, guid: 1c9c6b572b1a31942bd24d3e8ca8f9d8, type: 3}
       propertyPath: m_LocalPosition.x

@@ -111,7 +111,6 @@ public class MarketTrigger : MonoBehaviour
             if (marketMenu != null)
             {
                 marketMenu.SetActive(true);
-                Debug.Log("Market açýldý!");
             }
         }
     }
@@ -123,7 +122,6 @@ public class MarketTrigger : MonoBehaviour
             if (marketMenu != null)
             {
                 marketMenu.SetActive(false);
-                Debug.Log("Market kapandý!");
             }
         }
     }

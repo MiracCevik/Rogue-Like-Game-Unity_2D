@@ -56,7 +56,19 @@ public class Bullet : NetworkBehaviour
         Vector2 dir = netDirection.Value != Vector2.zero ? netDirection.Value : moveDirection;
         transform.Translate(dir * speed * Time.deltaTime, Space.World);
         
-        transform.localScale = new Vector3(isFacingRight.Value ? 1 : -1, 1, 1);
+        // Check if we're running in offline mode
+        bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
+        
+        if (isOfflineMode)
+        {
+            // In offline mode, use the local direction to set scale
+            transform.localScale = new Vector3(moveDirection.x >= 0 ? 1 : -1, 1, 1);
+        }
+        else
+        {
+            // In online mode, use network variable
+            transform.localScale = new Vector3(isFacingRight.Value ? 1 : -1, 1, 1);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

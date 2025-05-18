@@ -18,12 +18,20 @@ public class ChestController : NetworkBehaviour
     {
         if ((collision.CompareTag("Weapon") || collision.CompareTag("Bullet") || collision.CompareTag("Player")) && !isOpened)
         {
-            // Only server can initiate the chest opening sequence
+            if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
+            {
+                chestAnimator.SetBool("IsOpened", true);
+                ShowRandomWeapons();
+                isOpened = true;
+                return;
+            }
+            
+            // Network mod - Server kontrolü
             if (IsServer)
             {
                 OpenChestClientRpc();
             }
-            // When a client hits the chest, request the server to open it
+            // Network mod - Client kontrolü
             else if (IsClient)
             {
                 RequestOpenChestServerRpc();

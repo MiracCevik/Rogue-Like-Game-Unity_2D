@@ -46,7 +46,7 @@ public class NetworkSpawnManager : NetworkBehaviour
         return spawnPoints[Random.Range(0, spawnPoints.Length)];
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (NetworkManager.Singleton != null)
         {

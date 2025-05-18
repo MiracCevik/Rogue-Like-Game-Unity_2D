@@ -206,10 +206,281 @@ public class WeaponsScript : NetworkBehaviour
         // Offline modda veya bu silahın sahibiyse ateş et
         if (IsOfflineMode() || IsOwner)
         {
-            ShootServerRpc();
+            if (IsOfflineMode())
+            {
+                PerformLocalShoot();
+            }
+            else
+            {
+                ShootServerRpc();
+            }
             
             StartCoroutine(ShootCooldown());
         }
+    }
+
+    // Offline mod için yerel atış işlemi
+    private void PerformLocalShoot()
+    {
+        if (!canShoot) return;
+        
+        canShoot = false;
+        
+        GameObject bulletPrefab = null;
+        string weaponTypeStr = "Bilinmeyen";
+
+        switch (weaponData.weaponType)
+        {
+            case WeaponType.Rifle:
+                bulletPrefab = rifleBulletPrefab;
+                weaponTypeStr = "Rifle";
+                break;
+            case WeaponType.Pistol:
+                bulletPrefab = pistolBulletPrefab;
+                weaponTypeStr = "Pistol";
+                break;
+            case WeaponType.Bow:
+                bulletPrefab = arrowPrefab;
+                weaponTypeStr = "Bow";
+                break;
+            default:
+                Debug.LogWarning("Bu silah türü mermi atışı desteklemiyor.");
+                canShoot = true;
+                return;
+        }
+
+        if (bulletPrefab == null)
+        {
+            canShoot = true;
+            return;
+        }
+
+        // Silahı aktif et
+        ActivateLocalWeapon(weaponTypeStr);
+
+        if (bulletPrefab != null && firePoint != null)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            
+            Vector2 characterScale = transform.parent.localScale;
+            Vector2 direction = characterScale.x > 0 ? Vector2.right : Vector2.left;
+            
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                int totalDamage = CalculateWeaponDamage();
+                bulletScript.Initialize(direction, totalDamage, transform.parent.gameObject);
+                bulletScript.SetWeaponData(weaponData);
+
+                // Önemli: Offline modda merminin yönünü ayarla
+                if (direction.x < 0)
+                {
+                    Vector3 bulletScale = bullet.transform.localScale;
+                    bulletScale.x = -Mathf.Abs(bulletScale.x);
+                    bullet.transform.localScale = bulletScale;
+                }
+                else
+                {
+                    Vector3 bulletScale = bullet.transform.localScale;
+                    bulletScale.x = Mathf.Abs(bulletScale.x);
+                    bullet.transform.localScale = bulletScale;
+                }
+            }
+            else
+            { 
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.velocity = direction * 10f;
+                    if (direction.x < 0)
+                    {
+                        Vector3 bulletScale = rb.transform.localScale;
+                        bulletScale.x = -Mathf.Abs(bulletScale.x);
+                        rb.transform.localScale = bulletScale;
+                    }
+                }
+            }
+
+            Destroy(bullet, 5f); // Mermiyi 5 saniye sonra temizle
+        }
+        else
+        {
+            canShoot = true;
+        }
+    }
+
+    // Offline mod için silahı aktifleştir
+    private void ActivateLocalWeapon(string weaponType)
+    {
+        DeactivateAllWeapons();
+        
+        GameObject weaponObj = null;
+        
+        switch (weaponType)
+        {
+            case "Rifle":
+                if (riflePrefab != null) 
+                {
+                    weaponObj = riflePrefab;
+                }
+                break;
+                
+            case "Pistol":
+                if (pistolPrefab != null) 
+                {
+                    weaponObj = pistolPrefab;
+                }
+                break;
+                
+            case "Bow":
+                Transform bowTransform = transform.parent.Find("Bow");
+                if (bowTransform != null)
+                {
+                    weaponObj = bowTransform.gameObject;
+                }
+                break;
+        }
+        
+        if (weaponObj != null)
+        {
+            weaponObj.SetActive(true);
+            
+            SpriteRenderer renderer = weaponObj.GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                renderer.enabled = true;
+                Color color = renderer.color;
+                color.a = 1.0f;
+                renderer.color = color;
+            }
+            
+            if (animator != null)
+            {
+                animator.SetTrigger(weaponData.normalAttackTrigger);
+            }
+            
+            StartCoroutine(DeactivateWeaponAfterDelay(weaponObj, 1.5f));
+        }
+    }
+
+    private void PositionWeapon(GameObject weapon)
+    {
+        
+            SpriteRenderer renderer = weapon.GetComponent<SpriteRenderer>();
+            if (renderer != null)
+            {
+                renderer.sortingOrder = 10; 
+            }
+            
+        
+    }
+
+    private IEnumerator DeactivateWeaponAfterDelay(GameObject weapon, float delay)
+    {
+        if (weapon == null) yield break;
+        
+        yield return new WaitForSeconds(delay);
+        
+        if (weapon != null)
+        {
+            weapon.SetActive(false);
+        }
+    }
+
+    public void OnWeaponChanged(WeaponData newWeaponData)
+    {
+        DeactivateAllWeapons();
+        
+        if (newWeaponData != null)
+        {
+            switch (newWeaponData.weaponType)
+            {
+                case WeaponType.Rifle:
+                    if (riflePrefab != null)
+                    {
+                        PositionWeapon(riflePrefab);
+                        riflePrefab.SetActive(true);
+                    }
+                    break;
+                    
+                case WeaponType.Pistol:
+                    if (pistolPrefab != null)
+                    {
+                        PositionWeapon(pistolPrefab);
+                        pistolPrefab.SetActive(true);
+                    }
+                    break;
+                    
+                case WeaponType.Bow:
+                    Transform bowTransform = transform.parent.Find("Bow");
+                    if (bowTransform != null)
+                    {
+                        PositionWeapon(bowTransform.gameObject);
+                        bowTransform.gameObject.SetActive(true);
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void SetWeaponData(WeaponData newWeaponData)
+    {
+        weaponData = newWeaponData;
+        OnWeaponChanged(newWeaponData);
+    }
+
+    [ClientRpc]
+    private void TriggerWeaponAnimationClientRpc(string weaponType)
+    {
+        string triggerName = "";
+        
+        if (weaponData != null && !string.IsNullOrEmpty(weaponData.normalAttackTrigger))
+        {
+            triggerName = weaponData.normalAttackTrigger;
+        }
+        else
+        {
+            switch (weaponType)
+            {
+                case "Rifle":
+                    triggerName = "RifleAttack";
+                    break;
+                case "Pistol":
+                    triggerName = "PistolAttack";
+                    break;
+                case "Bow":
+                    triggerName = "ArrowAttack";
+                    break;
+                default:
+                    triggerName = "Attack";
+                    break;
+            }
+        }
+        
+        if (animator != null)
+        {
+            animator.SetTrigger(triggerName);
+        }
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        canShoot = false;
+        
+        float cooldownTime = weaponData != null ? weaponData.attackSpeed : 1f;
+        
+        yield return new WaitForSeconds(cooldownTime);
+        
+        canShoot = true;
+        
+    }
+
+    private int CalculateWeaponDamage()
+    {
+        return weaponData != null ? weaponData.damage : 0;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -369,125 +640,5 @@ public class WeaponsScript : NetworkBehaviour
             
             StartCoroutine(DeactivateWeaponAfterDelay(weaponObj, 1.5f));
         }
-    }
-
-    private void PositionWeapon(GameObject weapon)
-    {
-        
-            SpriteRenderer renderer = weapon.GetComponent<SpriteRenderer>();
-            if (renderer != null)
-            {
-                renderer.sortingOrder = 10; 
-            }
-            
-        
-    }
-
-    private IEnumerator DeactivateWeaponAfterDelay(GameObject weapon, float delay)
-    {
-        if (weapon == null) yield break;
-        
-        yield return new WaitForSeconds(delay);
-        
-        if (weapon != null)
-        {
-            weapon.SetActive(false);
-        }
-    }
-
-    public void OnWeaponChanged(WeaponData newWeaponData)
-    {
-        DeactivateAllWeapons();
-        
-        if (newWeaponData != null)
-        {
-            switch (newWeaponData.weaponType)
-            {
-                case WeaponType.Rifle:
-                    if (riflePrefab != null)
-                    {
-                        PositionWeapon(riflePrefab);
-                        riflePrefab.SetActive(true);
-                    }
-                    break;
-                    
-                case WeaponType.Pistol:
-                    if (pistolPrefab != null)
-                    {
-                        PositionWeapon(pistolPrefab);
-                        pistolPrefab.SetActive(true);
-                    }
-                    break;
-                    
-                case WeaponType.Bow:
-                    Transform bowTransform = transform.parent.Find("Bow");
-                    if (bowTransform != null)
-                    {
-                        PositionWeapon(bowTransform.gameObject);
-                        bowTransform.gameObject.SetActive(true);
-                    }
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
-    }
-
-    public void SetWeaponData(WeaponData newWeaponData)
-    {
-        weaponData = newWeaponData;
-        OnWeaponChanged(newWeaponData);
-    }
-
-    [ClientRpc]
-    private void TriggerWeaponAnimationClientRpc(string weaponType)
-    {
-        string triggerName = "";
-        
-        if (weaponData != null && !string.IsNullOrEmpty(weaponData.normalAttackTrigger))
-        {
-            triggerName = weaponData.normalAttackTrigger;
-        }
-        else
-        {
-            switch (weaponType)
-            {
-                case "Rifle":
-                    triggerName = "RifleAttack";
-                    break;
-                case "Pistol":
-                    triggerName = "PistolAttack";
-                    break;
-                case "Bow":
-                    triggerName = "ArrowAttack";
-                    break;
-                default:
-                    triggerName = "Attack";
-                    break;
-            }
-        }
-        
-        if (animator != null)
-        {
-            animator.SetTrigger(triggerName);
-        }
-    }
-
-    private IEnumerator ShootCooldown()
-    {
-        canShoot = false;
-        
-        float cooldownTime = weaponData != null ? weaponData.attackSpeed : 1f;
-        
-        yield return new WaitForSeconds(cooldownTime);
-        
-        canShoot = true;
-        
-    }
-
-    private int CalculateWeaponDamage()
-    {
-        return weaponData != null ? weaponData.damage : 0;
     }
 }

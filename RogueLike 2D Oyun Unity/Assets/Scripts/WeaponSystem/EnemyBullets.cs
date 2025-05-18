@@ -5,12 +5,23 @@ public class EnemyBullets : NetworkBehaviour
 {
     public EnemyStats stats;
     public int bulletDamage;
+    public Vector2 moveDirection;
+    public float speed = 10f;
 
     private void Start()
     {
         if (stats != null) bulletDamage = stats.enemyDamage;
 
         Destroy(gameObject, 4f);
+    }
+
+    private void Update()
+    {
+        // Eğer yön atanmışsa onu kullan
+        if (moveDirection != Vector2.zero)
+        {
+            transform.Translate(moveDirection * speed * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,5 +48,16 @@ public class EnemyBullets : NetworkBehaviour
                 Destroy(gameObject);
             }
         }
+        else if (collision.CompareTag("Ground") || IsWall(collision))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private bool IsWall(Collider2D collision)
+    {
+        string layerName = LayerMask.LayerToName(collision.gameObject.layer);
+        return layerName.Contains("Ground") || layerName.Contains("Wall") || 
+               layerName.Contains("Obstacle") || layerName.Contains("Environment");
     }
 }

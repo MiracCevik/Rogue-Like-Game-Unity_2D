@@ -13,6 +13,7 @@ public class AttackRange : NetworkBehaviour
     private Animator animator;
     private bool isAttacking = false;
     private bool isFacingRight;
+    private KarakterHareket playerController;
 
     // Offline (local host) modunda olup olmadığımızı kontrol et
     private bool IsOfflineMode()
@@ -36,7 +37,7 @@ public class AttackRange : NetworkBehaviour
             return;
         }
         
-
+        FindPlayer();
         if (circleCollider == null) circleCollider = GetComponent<CircleCollider2D>();
     }
 
@@ -44,25 +45,56 @@ public class AttackRange : NetworkBehaviour
     {
         // Offline modda veya server ise çalışsın
         if (!IsOfflineMode() && !IsServer) return;
+        
+        if (player == null)
+        {
+            FindPlayer();
+        }
+    }
+
+    private void FindPlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null)
+        {
+            playerController = player.GetComponent<KarakterHareket>();
+        }
     }
 
     public void MoveTowardsPlayer(Transform targetPlayer)
     {
+        // Oyuncu bulunamadıysa çık
+        if (targetPlayer == null)
+        {
+            FindPlayer();
+            if (player == null) return;
+            targetPlayer = player;
+        }
+
         // Offline modda veya server ise düşman hareketlerini yönet
-        if (!IsOfflineMode() && !IsServer || targetPlayer == null || enemy == null || stats == null) return;
+        if (!IsOfflineMode() && !IsServer || enemy == null || stats == null) return;
 
         float distance = Vector2.Distance(enemy.transform.position, targetPlayer.position);
 
+        // Düşman yönünü oyuncuya göre ayarla
         bool shouldFaceRight = targetPlayer.position.x > enemy.transform.position.x;
-        if ((shouldFaceRight && enemy.transform.localScale.x < 0) || (!shouldFaceRight && enemy.transform.localScale.x > 0))
+        bool isCurrentlyFacingRight = enemy.transform.localScale.x > 0;
+        
+        if (shouldFaceRight != isCurrentlyFacingRight)
         {        
             Flip();
         }
 
+        // Oyuncuya doğru yönlendirirken ideal mesafeyi koru
         if (distance > 1.1f) 
         {
             Vector2 direction = (targetPlayer.position - enemy.transform.position).normalized;
             enemy.transform.Translate(direction * stats.moveSpeed * Time.deltaTime);
+        }
+        else if (distance < 0.8f) // Çok yakınsa biraz geri çekil
+        {
+            Vector2 direction = (enemy.transform.position - targetPlayer.position).normalized;
+            enemy.transform.Translate(direction * stats.moveSpeed * 0.5f * Time.deltaTime);
         }
     }
 
@@ -100,7 +132,11 @@ public class AttackRange : NetworkBehaviour
         while (isAttacking)
         {
             // Animasyon tetikle
-            if (animator != null)
+            if (animator != null && stats != null && !string.IsNullOrEmpty(stats.normalAttackTrigger))
+            {
+                animator.SetTrigger(stats.normalAttackTrigger);
+            }
+            else if (animator != null)
             {
                 animator.SetTrigger("Attack");
             }

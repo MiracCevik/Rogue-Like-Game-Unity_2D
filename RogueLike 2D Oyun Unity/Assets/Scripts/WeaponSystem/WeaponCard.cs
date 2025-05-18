@@ -36,22 +36,40 @@ public class WeaponCard : MonoBehaviour
             card.gameObject.SetActive(false);
         }
 
-        KarakterHareket[] allPlayers = FindObjectsOfType<KarakterHareket>();
-        
         KarakterHareket localPlayer = null;
-        foreach (KarakterHareket player in allPlayers)
+        
+        // Offline mod için KarakterHareket.instance'ı kullan
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
         {
-            if (player.IsOwner)
+            localPlayer = KarakterHareket.instance;
+            
+            // Debug log ekleyelim
+            if (localPlayer == null)
             {
-                localPlayer = player;
-                break;
+                Debug.LogError("Single player modunda karakter bulunamadı!");
+            }
+            else
+            {
+                Debug.Log("Single player modunda karakter bulundu: " + localPlayer.name);
+            }
+        }
+        else
+        {
+            // Online mod için tüm karakterleri kontrol et ve sahibi olan karakteri bul
+            KarakterHareket[] allPlayers = FindObjectsOfType<KarakterHareket>();
+            foreach (KarakterHareket player in allPlayers)
+            {
+                if (player.IsOwner)
+                {
+                    localPlayer = player;
+                    break;
+                }
             }
         }
 
         if (localPlayer != null)
         {
-            
-            if (NetworkManager.Singleton.IsListening)
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
             {
                 string weaponName = weaponData.weaponName;
                 int damage = weaponData.damage;
@@ -62,13 +80,23 @@ public class WeaponCard : MonoBehaviour
             }
             else
             {
+                // Debug bilgisi
+                Debug.Log("Single player modunda silah değiştiriliyor: " + weaponData.weaponName);
+                
+                // Single player modunda direkt EquipWeapon çağır
                 localPlayer.EquipWeapon(weaponData);
+                
+                // Silah verilerini kaydet
                 SaveManager saveManager = FindObjectOfType<SaveManager>();
                 if (saveManager != null)
                 {
                     saveManager.SaveGame();
                 }
             }
+        }
+        else
+        {
+            Debug.LogError("Oyuncu karakteri bulunamadı, silah değiştirilemedi!");
         }
 
         CloseChest();
