@@ -5,25 +5,26 @@ using System.Collections.Generic;
 
 public class ChestSpawnManager : NetworkBehaviour
 {
-    [System.Serializable]
-    public class SpawnPoint
-    {
-        public Vector3 position;
-        public bool isOccupied;
-    }
-
     [Header("Spawn Ayarları")]
     public GameObject chestPrefab;
-    public List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
+    [SerializeField] private Transform[] spawnPoints;
     public float minSpawnTime = 30f;
     public float maxSpawnTime = 60f;
     public int maxActiveChests = 3;
 
     private List<GameObject> activeChests = new List<GameObject>();
+    private List<bool> occupiedSpawnPoints = new List<bool>();
 
     public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
+        
+        occupiedSpawnPoints.Clear();
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            occupiedSpawnPoints.Add(false);
+        }
+        
         StartCoroutine(SpawnChestRoutine());
     }
 
@@ -35,10 +36,10 @@ public class ChestSpawnManager : NetworkBehaviour
 
             if (activeChests.Count < maxActiveChests)
             {
-                SpawnPoint availablePoint = GetRandomAvailableSpawnPoint();
-                if (availablePoint != null)
+                int availablePointIndex = GetRandomAvailableSpawnPointIndex();
+                if (availablePointIndex >= 0)
                 {
-                    SpawnChest(availablePoint);
+                    SpawnChest(availablePointIndex);
                 }
             }
 
@@ -51,51 +52,74 @@ public class ChestSpawnManager : NetworkBehaviour
     {
         activeChests.RemoveAll(chest => chest == null);
         
-        foreach (SpawnPoint point in spawnPoints)
+        for (int i = 0; i < occupiedSpawnPoints.Count; i++)
         {
-            bool hasChestAtPoint = false;
-            foreach (GameObject chest in activeChests)
+            occupiedSpawnPoints[i] = false;
+        }
+        
+        foreach (GameObject chest in activeChests)
+        {
+            if (chest == null) continue;
+            
+            for (int i = 0; i < spawnPoints.Length; i++)
             {
-                if (chest != null && Vector3.Distance(chest.transform.position, point.position) < 0.1f)
+                if (Vector3.Distance(chest.transform.position, spawnPoints[i].position) < 0.1f)
                 {
-                    hasChestAtPoint = true;
+                    occupiedSpawnPoints[i] = true;
                     break;
                 }
             }
-            point.isOccupied = hasChestAtPoint;
         }
     }
 
-    private SpawnPoint GetRandomAvailableSpawnPoint()
+    private int GetRandomAvailableSpawnPointIndex()
     {
-        List<SpawnPoint> availablePoints = spawnPoints.FindAll(p => !p.isOccupied);
+        List<int> availableIndices = new List<int>();
         
-        if (availablePoints.Count == 0) return null;
+        for (int i = 0; i < occupiedSpawnPoints.Count; i++)
+        {
+            if (!occupiedSpawnPoints[i])
+            {
+                availableIndices.Add(i);
+            }
+        }
         
-        return availablePoints[Random.Range(0, availablePoints.Count)];
+        if (availableIndices.Count == 0) return -1;
+        
+        return availableIndices[Random.Range(0, availableIndices.Count)];
     }
 
-    private void SpawnChest(SpawnPoint spawnPoint)
+    private void SpawnChest(int spawnPointIndex)
     {
         if (!IsServer) return;
 
-        GameObject chest = Instantiate(chestPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject chest = Instantiate(chestPrefab, spawnPoints[spawnPointIndex].position, Quaternion.identity);
         NetworkObject netObj = chest.GetComponent<NetworkObject>();
 
         if (netObj != null)
         {
             netObj.Spawn();
             activeChests.Add(chest);
-            spawnPoint.isOccupied = true;
+            occupiedSpawnPoints[spawnPointIndex] = true;
         }
     }
 
     private void OnDrawGizmos()
     {
-        foreach (SpawnPoint point in spawnPoints)
+        if (spawnPoints == null) return;
+        
+        for (int i = 0; i < spawnPoints.Length; i++)
         {
-            Gizmos.color = point.isOccupied ? Color.red : Color.green;
-            Gizmos.DrawWireSphere(point.position, 0.5f);
+            if (spawnPoints[i] == null) continue;
+            
+            bool isOccupied = false;
+            if (occupiedSpawnPoints != null && i < occupiedSpawnPoints.Count)
+            {
+                isOccupied = occupiedSpawnPoints[i];
+            }
+            
+            Gizmos.color = isOccupied ? Color.red : Color.green;
+            Gizmos.DrawWireSphere(spawnPoints[i].position, 0.5f);
         }
     }
 }

@@ -18,8 +18,6 @@ public class MeleeAttack : IEnemyAttack
     public void ExecuteAttack(Animator animator, Transform player, EnemyStats stats, Transform enemyTransform, GameObject bulletPrefab)
     {
         if (player == null) return;
-        
-        // AnimatorController'ı kontrol et
         if (animator != null && !string.IsNullOrEmpty(stats.normalAttackTrigger))
         {
             animator.SetTrigger(stats.normalAttackTrigger);
@@ -28,8 +26,6 @@ public class MeleeAttack : IEnemyAttack
         {
             animator.SetTrigger("Attack");
         }
-        
-        // AttackRange bileşeni ile oyuncuya hareket et
         AttackRange attack = enemyTransform.GetComponent<AttackRange>();
         if (attack != null) 
         {
@@ -37,7 +33,6 @@ public class MeleeAttack : IEnemyAttack
         }
         else
         {
-            // AttackRange yoksa, düşmanı doğrudan oyuncuya doğru hareket ettir
             float distance = Vector2.Distance(enemyTransform.position, player.position);
             
             if (distance > 1.0f)
@@ -45,15 +40,14 @@ public class MeleeAttack : IEnemyAttack
                 Vector2 direction = (player.position - enemyTransform.position).normalized;
                 enemyTransform.Translate(direction * stats.moveSpeed * Time.deltaTime);
             }
-            else if (distance < 0.8f) // Çok yakınsa biraz uzaklaş
+            else if (distance < 0.8f)
             {
                 Vector2 direction = (enemyTransform.position - player.position).normalized;
                 enemyTransform.Translate(direction * stats.moveSpeed * 0.5f * Time.deltaTime);
             }
         }
         
-        // Oyuncu yakınında mı kontrol et ve hasarı uygula
-        float attackRadius = 1.5f; // Saldırı menzilini genişlet
+        float attackRadius = 1.5f;
         Collider2D[] hits = Physics2D.OverlapCircleAll(enemyTransform.position, attackRadius);
         
         bool hasHitPlayer = false;
@@ -64,7 +58,6 @@ public class MeleeAttack : IEnemyAttack
                 KarakterHareket playerTarget = hit.GetComponent<KarakterHareket>();
                 if (playerTarget != null)
                 {
-                    // Offline modda direkt hasar ver, online modda RPC kullan
                     bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
                     int damage = stats.enemyDamage;
                     
@@ -77,11 +70,8 @@ public class MeleeAttack : IEnemyAttack
                 }
             }
         }
-        
-        // Eğer oyuncuya vuramadıysak
         if (!hasHitPlayer && attack == null)
         {
-            // Düşman yönünü her zaman oyuncuya doğru tutsun
             bool shouldFaceRight = player.position.x > enemyTransform.position.x;
             bool isCurrentlyFacingRight = enemyTransform.localScale.x > 0;
             
@@ -107,7 +97,6 @@ public class RangedAttack : IEnemyAttack
     {
         if (player == null) return;
         
-        // AnimatorController'ı kontrol et
         if (animator != null && !string.IsNullOrEmpty(stats.normalAttackTrigger))
         {
             animator.SetTrigger(stats.normalAttackTrigger);
@@ -118,10 +107,6 @@ public class RangedAttack : IEnemyAttack
         }
 
         if (bulletPrefab == null) return;
-
-        // Düşman yönünü oyuncuya göre ayarla - Düzeltilmiş yön mantığı
-        // Eğer oyuncu düşmanın sağındaysa, düşman sağa bakmalı (pozitif scale)
-        // Eğer oyuncu düşmanın solundaysa, düşman sola bakmalı (negatif scale)
         bool shouldFaceRight = player.position.x > enemyTransform.position.x;
         bool isCurrentlyFacingRight = enemyTransform.localScale.x > 0;
         
@@ -130,32 +115,21 @@ public class RangedAttack : IEnemyAttack
             Vector3 scale = enemyTransform.localScale;
             scale.x *= -1;
             enemyTransform.localScale = scale;
-            Debug.Log($"RangedAttack: Düşman yönü değiştirildi. Oyuncu X: {player.position.x}, Düşman X: {enemyTransform.position.x}, Sağa bakmalı: {shouldFaceRight}");
         }
 
-        // SADECE X EKSENİNDE HAREKET ET - Sadece sağa veya sola doğru
         Vector2 direction = new Vector2(shouldFaceRight ? 1 : -1, 0);
-        
-        // Merminin konumunu ayarla (düşmanın önünde)
         Vector3 spawnPosition = enemyTransform.position + new Vector3(direction.x * 0.5f, 0, 0);
-        
-        // İlk önce online ve offline modunu kontrol et
         bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
         
         if (isOfflineMode || !NetworkManager.Singleton.IsListening)
         {
-            // Offline modu için
             GameObject bullet = GameObject.Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
             
-            // Mermi yönünü ayarla
             Vector3 bulletScale = bullet.transform.localScale;
             bulletScale.x = direction.x >= 0 ? Mathf.Abs(bulletScale.x) : -Mathf.Abs(bulletScale.x);
             bullet.transform.localScale = bulletScale;
             
-            // Mermi bileşenlerini ayarla
             EnemyBullets bulletScript = bullet.GetComponent<EnemyBullets>();
-            
-            // Mermi hızını ve yönünü ayarla
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
@@ -163,47 +137,34 @@ public class RangedAttack : IEnemyAttack
             }
             else if (bulletScript != null)
             {
-                // EnemyBullet script'i kullanıyorsa
                 bulletScript.moveDirection = direction;
             }
             
-            // Mermi hasarını ayarla
             if (bulletScript != null)
             {
                 bulletScript.stats = stats;
                 bulletScript.bulletDamage = stats.enemyDamage;
             }
             
-            // Belirli bir süre sonra mermiyi yok et
             GameObject.Destroy(bullet, 4f);
         }
         else
         {
-            // Online mod için orijinal kodu kullan
-            // Merminin yönünü hesapla
             bool isFlipped = direction.x < 0;
-            
-            // Mermiyi oluştur
             GameObject bullet = GameObject.Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-            
-            // Mermi bileşenlerini ayarla
             EnemyBullets bulletScript = bullet.GetComponent<EnemyBullets>();
-            
-            // Mermi hızını ayarla - SADECE X EKSENİNDE
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 rb.velocity = direction * 10;
             }
             
-            // Mermi hasarını ayarla
             if (bulletScript != null)
             {
                 bulletScript.stats = stats;
                 bulletScript.bulletDamage = stats.enemyDamage;
             }
             
-            // Mermi yönünü ayarla (flip)
             if (isFlipped)
             {
                 Vector3 bulletScale = bullet.transform.localScale;
@@ -217,7 +178,6 @@ public class RangedAttack : IEnemyAttack
                 bullet.transform.localScale = bulletScale;
             }
             
-            // Belirli bir süre sonra mermiyi yok et (eğer NetworkObject değilse)
             if (bullet.GetComponent<NetworkObject>() == null)
             {
                 GameObject.Destroy(bullet, 4f);

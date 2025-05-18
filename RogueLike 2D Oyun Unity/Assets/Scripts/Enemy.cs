@@ -27,18 +27,14 @@ public class Enemies : NetworkBehaviour
 
 
     private string fileName = "EnemyStats.json";
-    private bool isShooting;
     private float attackTimer = 0f;
-    private float detectionRange = 15f; // Düşmanların oyuncuyu algılama menzili
+    private float detectionRange = 15f;
 
     private bool IsOfflineMode()
     {
-        try
-        {
-            // GameManager.Instance null kontrolü
+        
             if (GameManager.Instance == null)
             {
-                // GameManager'ı bulmaya çalış
                 GameManager managerInScene = GameObject.FindObjectOfType<GameManager>();
                 if (managerInScene != null)
                 {
@@ -48,12 +44,8 @@ public class Enemies : NetworkBehaviour
             }
             
             return GameManager.Instance.isLocalHostMode;
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("IsOfflineMode detaylı hata: " + e.Message);
-            return false;
-        }
+        
+      
     }
 
     void Awake()
@@ -94,10 +86,7 @@ public class Enemies : NetworkBehaviour
 
     void Start()
     {
-        // Oyuncuyu bul
         FindPlayer();
-        
-        // AttackRange bileşenini al (yoksa)
         if (attackRange == null)
         {
             attackRange = GetComponent<AttackRange>();
@@ -115,43 +104,21 @@ public class Enemies : NetworkBehaviour
 
     void Update()
     {
-        try
-        {
-            // NetworkManager veya GameManager kontrolü için daha güvenli kontroller
+        
             bool offline = false;
             try {
                 offline = IsOfflineMode();
             }
             catch (System.Exception e) {
-                Debug.LogWarning("IsOfflineMode hata: " + e.Message);
                 offline = false;
             }
 
             if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening || offline)
             {
-                // İç içe try-catch ile hata yerini daha iyi belirle
-                try {
                     UpdateEnemyBehavior();
-                }
-                catch (System.Exception e) {
-                    Debug.LogError("UpdateEnemyBehavior hata: " + e.Message + "\n" + e.StackTrace);
-                }
+             
                 return;
-            }
-
-            if (!IsServer) return;
-            
-            try {
-                UpdateEnemyBehavior();
-            }
-            catch (System.Exception e) {
-                Debug.LogError("UpdateEnemyBehavior (Server) hata: " + e.Message + "\n" + e.StackTrace);
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError("Enemy Update ana hata: " + ex.Message + "\n" + ex.StackTrace);
-        }
+            }  
     }
 
     private void FindPlayer()
@@ -168,130 +135,83 @@ public class Enemies : NetworkBehaviour
 
     private void UpdateEnemyBehavior()
     {
-        try
-        {
-            // Oyuncu kontrolü
             FindPlayer();
             if (player == null)
             {
-                // Son bir kez daha dene
                 player = GameObject.FindGameObjectWithTag("Player")?.transform;
                 if (player == null)
                 {
-                    Debug.LogWarning("Düşman, oyuncuyu bulamadı");
                     return;
                 }
             }
 
-            // Enemy Stats kontrolü
             if (enemyStats == null)
             {
-                // Enemy Stats yoksa yeniden oluştur
                 InitializeEnemy();
                 if (enemyStats == null)
                 {
-                    Debug.LogWarning("Enemy Stats bulunamadı veya oluşturulamadı");
                     return;
                 }
             }
 
-            // Attack Behavior kontrolü
             if (attackBehavior == null)
             {
                 AssignAttackBehavior();
-                if (attackBehavior == null)
-                {
-                    Debug.LogWarning("Attack Behavior bulunamadı veya oluşturulamadı");
-                    // Devam et, en azından hareket edebilir
-                }
+              
             }
 
             float distance = Vector2.Distance(transform.position, player.position);
             
-            // Düşman yönünü oyuncuya doğru çevir (flip)
             UpdateEnemyFacing();
-
-            // Düşman görüş menzili içinde mi kontrol et
             if (distance <= detectionRange)
             {
-                // Düşman tipine göre davranış belirle
+               
                 if (enemyStats.attackType == AttackType.Melee)
                 {
-                    try
-                    {
+                   
                         HandleMeleeEnemyBehavior(distance);
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.LogError("Melee behavior hata: " + e.Message);
-                    }
+                   
                 }
                 else if (enemyStats.attackType == AttackType.Ranged)
                 {
-                    try
-                    {
+                    
                         HandleRangedEnemyBehavior(distance);
-                    }
-                    catch (System.Exception e)
-                    {
-                        Debug.LogError("Ranged behavior hata: " + e.Message);
-                    }
+                   
                 }
             }
 
-            // Saldırı zamanı ayarlaması (cooldown)
             attackTimer += Time.deltaTime;
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("UpdateEnemyBehavior ana hata: " + e.Message + "\n" + e.StackTrace);
-        }
+        
     }
 
     private void UpdateEnemyFacing()
     {
         if (player == null) return;
-        
-        // Düşmanın yönünü oyuncuya göre ayarla - Düzeltilmiş yön mantığı
-        // Eğer oyuncu düşmanın sağındaysa, düşman sağa bakmalı (pozitif scale)
-        // Eğer oyuncu düşmanın solundaysa, düşman sola bakmalı (negatif scale)
         bool shouldFaceRight = player.position.x > transform.position.x;
-        
-        // Düşmanın şu anda hangi yöne baktığını kontrol et
         bool isCurrentlyFacingRight = transform.localScale.x > 0;
         
-        // Eğer bakması gereken yön ile şu anki yönü farklıysa, çevir
         if (shouldFaceRight != isCurrentlyFacingRight)
         {
-            // Düşmanı çevir
             Vector3 newScale = transform.localScale;
-            newScale.x *= -1; // Sadece X ekseninde çevir, boyutu değiştirmeden
+            newScale.x *= -1; 
             transform.localScale = newScale;
-            
-            // Debug log ekleyerek kontrol et
-            Debug.Log($"Düşman yönü değiştirildi. Oyuncu pozisyonu X: {player.position.x}, Düşman pozisyonu X: {transform.position.x}, Sağa bakmalı: {shouldFaceRight}");
         }
     }
 
     private void HandleMeleeEnemyBehavior(float distance)
     {
-        // Saldırı mesafesi içindeyse
         if (distance <= enemyStats.attackRange)
         {
-            // Saldırı cooldown'ı dolduysa saldır
             if (attackTimer >= 1f / enemyStats.attackSpeed && attackBehavior != null)
             {
                 attackBehavior.ExecuteAttack(animator, player, enemyStats, transform, bulletPrefab);
                 attackTimer = 0f;
             }
-            
-            // Çok yakınsa biraz mesafe al
             if (distance < 0.8f)
             {
                 Vector2 direction = (transform.position - player.position).normalized;
                 transform.Translate(direction * enemyStats.moveSpeed * 0.5f * Time.deltaTime);
             }
-            // Aksi halde yaklaş
             else
             {
                 if (attackRange != null)
@@ -300,13 +220,11 @@ public class Enemies : NetworkBehaviour
                 }
                 else
                 {
-                    // AttackRange yoksa, düşmanı doğrudan oyuncuya doğru hareket ettir
                     Vector2 direction = (player.position - transform.position).normalized;
                     transform.Translate(direction * enemyStats.moveSpeed * Time.deltaTime);
                 }
             }
         }
-        // Görüş menzili içindeyse ama saldırı menzilinde değilse, oyuncuya doğru git
         else if (distance <= enemyStats.attackRange * 3)
         {
             Vector2 direction = (player.position - transform.position).normalized;
@@ -316,24 +234,20 @@ public class Enemies : NetworkBehaviour
 
     private void HandleRangedEnemyBehavior(float distance)
     {
-        // Menzil içindeyse ateş et
         if (distance <= enemyStats.attackRange)
         {
-            // Ateş etme cooldown'ı dolduysa ateş et
             if (attackTimer >= 1f / enemyStats.attackSpeed && attackBehavior != null)
             {
                 attackBehavior.ExecuteAttack(animator, player, enemyStats, transform, bulletPrefab);
                 attackTimer = 0f;
             }
             
-            // Eğer oyuncu çok yakındaysa, uzaklaş
             if (distance < enemyStats.attackRange * 0.5f)
             {
                 Vector2 direction = (transform.position - player.position).normalized;
                 transform.Translate(direction * enemyStats.moveSpeed * 0.7f * Time.deltaTime);
             }
         }
-        // Menzil dışındaysa ama görüş içindeyse, yaklaş
         else if (distance > enemyStats.attackRange && distance <= enemyStats.attackRange * 2)
         {
             Vector2 direction = (player.position - transform.position).normalized;
@@ -341,25 +255,14 @@ public class Enemies : NetworkBehaviour
         }
     }
 
-    private IEnumerator FireRepeatedly()
-    {
-        while (isShooting)
-        {
-            attackBehavior.ExecuteAttack(animator, player, enemyStats, transform, bulletPrefab);
-            yield return new WaitForSeconds(3f);
-        }
-    }
 
     public void AssignAttackBehavior()
     {
-        // enemyStats veya karakterRef null ise çık
         if (enemyStats == null) return;
         
-        // Eğer player ve karakterRef null ise oyuncuyu bulmaya çalış
         if (player == null || karakterRef == null)
         {
             FindPlayer();
-            // Hala null ise çık
             if (player == null || karakterRef == null) return;
         }
         
@@ -376,15 +279,11 @@ public class Enemies : NetworkBehaviour
 
     private void InitializeEnemy()
     {
-        try
-        {
             if (enemyStats == null)
             {
-                // Önce enemyStats proje kaynaklarından yüklemeyi dene
                 Object[] allStats = Resources.LoadAll("EnemyStats", typeof(EnemyStats));
                 if (allStats != null && allStats.Length > 0)
                 {
-                    // Prefab ismine göre uygun enemy stats seç
                     string prefabName = gameObject.name.Replace("(Clone)", "").Trim();
                     foreach (var stat in allStats)
                     {
@@ -397,28 +296,22 @@ public class Enemies : NetworkBehaviour
                     }
                 }
                 
-                // Hala bulunamadıysa yeni oluştur
                 if (enemyStats == null)
                 {
                     enemyStats = ScriptableObject.CreateInstance<EnemyStats>();
                     string prefabName = gameObject.name.Replace("(Clone)", "").Trim();
                     enemyStats.enemyName = prefabName;
                     
-                    // Varsayılan değerler
                     enemyStats.enemyDamage = 20;
                     enemyStats.enemyHealth = 200;
                     enemyStats.attackSpeed = 1.0f;
                     enemyStats.attackRange = 10f;
                     enemyStats.moveSpeed = 1.0f;
-                    
-                    Debug.Log($"{gameObject.name} için yeni EnemyStats oluşturuldu");
                 }
             }
 
-            // Eğer hala null ise (olmamalı) hata ayıklama
             if (enemyStats == null)
             {
-                Debug.LogError($"{gameObject.name} için EnemyStats oluşturulamadı!");
                 return;
             }
 
@@ -431,11 +324,7 @@ public class Enemies : NetworkBehaviour
             {
                 spriteRenderer.sprite = enemyStats.enemyIcon;
             }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("InitializeEnemy hata: " + e.Message + "\n" + e.StackTrace);
-        }
+     
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -451,24 +340,18 @@ public class Enemies : NetworkBehaviour
                     
                     if (IsOfflineMode())
                     {
-                        // Offline modda doğrudan hasar uygula
                         TakeDamage(weaponDamage);
                     }
                     else
                     {
-                        // Online modda RPC kullan
                         TakeDamageServerRpc(weaponDamage);
                     }
                 }
             }
 
-            if (collision.CompareTag("Player"))
-            {
-            }
         }
     }
     
-    // Offline mod için hasar alma metodu
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -492,10 +375,7 @@ public class Enemies : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void TakeDamageServerRpc(int damage)
     {
-        // Sunucu tarafında hasar uygulanıyor
         TakeDamage(damage);
-        
-        // Network değişkenini güncelle
         networkHealth.Value = currentHealth;
     }
 
@@ -522,21 +402,16 @@ public class Enemies : NetworkBehaviour
     {
         if (greenHealthBar != null && redHealthBar != null)
         {
-            // Make sure health bars are active
             greenHealthBar.gameObject.SetActive(true);
             redHealthBar.gameObject.SetActive(true);
-            
-            // Update health bar scale based on current health
             float healthRatio = (float)currentHealth / enemyStats.enemyHealth;
             greenHealthBar.rectTransform.localScale = new Vector3(healthRatio, 1, 1);
             redHealthBar.enabled = currentHealth < enemyStats.enemyHealth;
-            
-            // Make sure health bar is above the enemy
             Canvas canvas = greenHealthBar.GetComponentInParent<Canvas>();
             if (canvas != null)
             {
                 canvas.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                canvas.transform.rotation = Quaternion.identity; // Keep health bar facing the camera
+                canvas.transform.rotation = Quaternion.identity;
             }
         }
     }

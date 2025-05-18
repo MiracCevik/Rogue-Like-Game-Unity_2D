@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject multiplayerPanel;
     [SerializeField] private string gameSceneName = "Base";
+    [SerializeField] private string[] onlineScenes;
 
     public void PlaySinglePlayer()
     {
@@ -28,8 +29,7 @@ public class MainMenu : MonoBehaviour
 
     public void ShowMultiplayerOptions()
     {
-
-        SceneManager.LoadScene("OnlineMap");
+        SelectRandomScene();
         mainMenuPanel.SetActive(false);
         multiplayerPanel.SetActive(true);
     }
@@ -67,6 +67,13 @@ public class MainMenu : MonoBehaviour
             Debug.LogError("GameManager bulunamadı!");
             NetworkManager.Singleton.StartClient();
         }
+    }
+
+    private void SelectRandomScene()
+    {
+      
+        int randomElement = Random.Range(0, onlineScenes.Length);
+        SceneManager.LoadScene(onlineScenes[randomElement]);
     }
 }
 

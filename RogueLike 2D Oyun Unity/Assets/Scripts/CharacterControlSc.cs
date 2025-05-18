@@ -239,7 +239,6 @@ public class KarakterHareket : NetworkBehaviour
         
         if (isOfflineMode)
         {
-            // Offline mod için yerel yetenek kullanımı
             if (Input.GetKeyDown(KeyCode.Q)) UseLocalSkill(0);
             if (Input.GetKeyDown(KeyCode.E)) UseLocalSkill(1);
             if (Input.GetKeyDown(KeyCode.Z)) UseLocalSkill(2);
@@ -247,7 +246,6 @@ public class KarakterHareket : NetworkBehaviour
         }
         else
         {
-            // Online mod için sunucu üzerinden yetenek kullanımı
             if (Input.GetKeyDown(KeyCode.Q)) RequestUseSkillServerRpc(0);
             if (Input.GetKeyDown(KeyCode.E)) RequestUseSkillServerRpc(1);
             if (Input.GetKeyDown(KeyCode.Z)) RequestUseSkillServerRpc(2);
@@ -255,16 +253,9 @@ public class KarakterHareket : NetworkBehaviour
         }
     }
     
-    // Offline mod için yerel yetenek kullanma metodu
     private void UseLocalSkill(int skillIndex)
     {
         SkillTreeManager manager = FindObjectOfType<SkillTreeManager>();
-        if (manager == null || skillIndex < 0 || skillIndex >= manager.skills.Count)
-        {
-            Debug.LogError("Skill manager bulunamadı veya yetenek indexi geçersiz!");
-            return;
-        }
-        
         SkillData skill = manager.skills[skillIndex];
         
         if (!skill.isUnlocked)
@@ -273,7 +264,6 @@ public class KarakterHareket : NetworkBehaviour
             return;
         }
         
-        // Cooldown kontrolü
         if (!skillLastUseTime.TryGetValue(skillIndex, out float lastUseTime))
         {
             lastUseTime = -skill.cooldown;
@@ -287,16 +277,13 @@ public class KarakterHareket : NetworkBehaviour
             return;
         }
         
-        // Cooldown süresini güncelle
         skillLastUseTime[skillIndex] = Time.time;
         
-        // UI cooldown göstergesini güncelle
         if (manager.skillIcons.Count > skillIndex && manager.skillIcons[skillIndex] != null)
         {
             manager.skillIcons[skillIndex].StartCooldown(skill.cooldown);
         }
         
-        // Yeteneği tipine göre kullan
         switch (skill.skillType)
         {
             case SkillData.SkillType.ChargeAttack:
@@ -317,7 +304,6 @@ public class KarakterHareket : NetworkBehaviour
         }
     }
     
-    // Offline mod için şarjlı saldırı
     private IEnumerator LocalChargeAttack(SkillData skill)
     {
         if (weaponsScript == null || weaponsScript.weaponData == null)
@@ -325,7 +311,6 @@ public class KarakterHareket : NetworkBehaviour
             yield break;
         }
 
-        // Normal saldırı animasyonunu tetikle
         string animTrigger = weaponsScript.weaponData.normalAttackTrigger;
         if (string.IsNullOrEmpty(animTrigger))
         {
@@ -354,7 +339,6 @@ public class KarakterHareket : NetworkBehaviour
             weaponAnimator.SetTrigger(animTrigger);
         }
 
-        // Normal saldırı cooldown'ını hemen resetle
         StopCoroutine(AttackCooldown());
         canAttack = true;
 
@@ -363,7 +347,6 @@ public class KarakterHareket : NetworkBehaviour
 
         if (isRangedWeapon)
         {
-            // Menzilli silahlar için
             GameObject bulletPrefab = null;
             
             if (weaponName == "Pistol" && weaponsScript.pistolPrefab != null)
@@ -388,7 +371,6 @@ public class KarakterHareket : NetworkBehaviour
                 Bullet bulletComponent = bullet.GetComponent<Bullet>();
                 if (bulletComponent != null)
                 {
-                    // 2 kat hasar
                     int skillDamage = (weaponsScript.weaponData.damage + attackDamage) * 2;
                     bulletComponent.Initialize(direction, skillDamage, gameObject);
                 }
@@ -396,7 +378,6 @@ public class KarakterHareket : NetworkBehaviour
         }
         else
         {
-            // Yakın dövüş silahları için
             float attackRange = 1.0f;
             float attackRadius = 0.5f;
             Vector2 attackOrigin = (Vector2)transform.position + (Vector2)(transform.right * transform.localScale.x * (attackRange * 0.5f));
@@ -410,49 +391,33 @@ public class KarakterHareket : NetworkBehaviour
             {
                 if (hit.gameObject == gameObject) continue;
 
-                // Düşmanlara hasar verme
                 Enemies enemyTarget = hit.GetComponent<Enemies>();
                 if (enemyTarget != null)
                 {
                     int weaponDamage = weaponsScript.weaponData.damage;
-                    int totalDamage = (weaponDamage + attackDamage) * 2; // 2 kat hasar
-                    
-                    // Doğrudan TakeDamage metodunu çağır
+                    int totalDamage = (weaponDamage + attackDamage) * 2;
                     enemyTarget.TakeDamage(totalDamage);
-                    
-                    // Debug mesajı
-                    Debug.Log("Şarjlı saldırı hasarı uygulandı: " + totalDamage + " Düşman: " + enemyTarget.name);
                 }
             }
         }
 
-        // Bekleme süresi
         yield return new WaitForSeconds(skill.cooldown);
     }
 
-    // Offline mod için AoE saldırı
     private IEnumerator LocalAoEAttack(SkillData skill)
     {
         if (AoePrefab == null)
         {
-            Debug.LogError("AoE Prefab atanmamış!");
             yield break;
         }
         
-        // AoE efektini oluştur
         GameObject aoeInstance = Instantiate(AoePrefab, transform.position, Quaternion.identity);
         
-        // Skill hasar hesapla
         int skillDamage = (weaponsScript != null && weaponsScript.weaponData != null) 
             ? (int)(weaponsScript.weaponData.damage * skill.damageMultiplier) 
             : (int)(attackDamage * skill.damageMultiplier);
         
-        // AoE alanındaki düşmanları tespit et
-        float aoeRadius = 5.0f; // AoE etki alanını artır
-        
-        Debug.Log("AoE saldırısı yapılıyor - Çap: " + aoeRadius);
-        
-        // Tüm collision layer'ları içerecek şekilde kontrol et
+        float aoeRadius = 5.0f;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, aoeRadius);
         int hitCount = 0;
         
@@ -460,37 +425,21 @@ public class KarakterHareket : NetworkBehaviour
         {
             if (hit.gameObject == gameObject) continue;
             
-            // "Enemy" tagine sahip olan nesneleri bul
             if (hit.CompareTag("Enemy"))
             {
                 hitCount++;
-                // Düşmanlara hasar ver
                 Enemies enemyTarget = hit.GetComponent<Enemies>();
                 if (enemyTarget != null)
                 {
-                    // Doğrudan TakeDamage metodunu çağır
                     enemyTarget.TakeDamage(skillDamage);
-                    
-                    // Debug mesajı 
-                    Debug.Log("AoE hasarı uygulandı: " + skillDamage + " Düşman: " + enemyTarget.name);
                 }
-                else
-                {
-                    Debug.LogWarning("Enemy tag'ine sahip nesne üzerinde Enemies bileşeni bulunamadı: " + hit.name);
-                }
+                
             }
         }
-        
-        Debug.Log("AoE alanında bulunan düşman sayısı: " + hitCount);
-        
-        // Efektin süresi
         yield return new WaitForSeconds(skill.chargeTime);
-        
-        // Efekti kaldır
         Destroy(aoeInstance);
     }
 
-    // Offline mod için Dash yeteneği
     private IEnumerator LocalDash(SkillData skill)
     {
         if (rb == null) yield break;
@@ -500,22 +449,17 @@ public class KarakterHareket : NetworkBehaviour
         int dashDamage = 15;
         float dashDistance = 5f;
 
-        // Geçici olarak vurulamazlık katmanına geçiş
         int originalLayer = gameObject.layer;
         gameObject.layer = LayerMask.NameToLayer("Invulnerable");
 
-        // Orijinal hızı kaydet ve sıfırla
         Vector2 originalVelocity = rb.velocity;
         rb.velocity = Vector2.zero;
-
-        // Hedef pozisyon
         Vector2 targetPosition = (Vector2)transform.position + Vector2.right * dashDirection * dashDistance;
 
         float elapsedTime = 0f;
         Vector2 startPosition = transform.position;
         int totalHitCount = 0;
         
-        Debug.Log("Dash başladı: " + startPosition + " -> " + targetPosition);
         
         while (elapsedTime < dashDuration)
         {
@@ -523,56 +467,37 @@ public class KarakterHareket : NetworkBehaviour
             t = Mathf.SmoothStep(0, 1, t);
             transform.position = Vector2.Lerp(startPosition, targetPosition, t);
 
-            // Dash sırasında düşmanlara çarparak hasar ver
-            // Layer maskesi kullanmadan tüm collider'ları kontrol et, tag ile filtrele
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.2f);
             
             foreach(var hit in hits)
             {
                 if (hit.gameObject == gameObject) continue;
                 
-                // Düşmanlara hasar ver - tag kontrolüyle
                 if (hit.CompareTag("Enemy"))
                 {
                     Enemies enemy = hit.GetComponent<Enemies>();
                     if (enemy != null)
                     {
-                        // Doğrudan TakeDamage metodunu çağır
                         enemy.TakeDamage(dashDamage);
                         
-                        // Debug mesajı
-                        Debug.Log("Dash hasarı uygulandı: " + dashDamage + " Düşman: " + enemy.name);
                         totalHitCount++;
                     }
-                    else
-                    {
-                        Debug.LogWarning("Enemy tag'ine sahip nesne üzerinde Enemies bileşeni bulunamadı: " + hit.name);
-                    }
+                  
                 }
             }
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
-        Debug.Log("Dash tamamlandı. Toplam vurulan düşman: " + totalHitCount);
-
-        // Orijinal katmana ve hıza geri dön
         gameObject.layer = originalLayer;
         rb.velocity = originalVelocity;
     }
 
-    // Offline mod için iyileştirme yeteneği
     private void LocalHeal(SkillData skill)
     {
-        // İyileştirme miktarı
         int healAmount = Mathf.Max(20, (int)skill.damageMultiplier);
         
-        // Kendini iyileştir
         currentHealth = Mathf.Clamp(currentHealth + 300, 0, CharHealth);
-        Debug.Log("İyileştirme uygulandı: " + currentHealth + "/" + CharHealth);
-        
-        // Health bar'ı güncelle
         UpdateHealthBar();
     }
 
@@ -588,21 +513,17 @@ public class KarakterHareket : NetworkBehaviour
             playerCooldowns = new Dictionary<int, float>();
             playerSkillCooldowns[clientId] = playerCooldowns;
         }
-
-        // Cooldown kontrolü ekle
         if (playerCooldowns.TryGetValue(skillIndex, out float lastUseTime))
         {
             float timeSinceLastUse = Time.time - lastUseTime;
             if (timeSinceLastUse < skill.cooldown)
             {
-                // Cooldown süresi dolmamış, isteği reddet
                 float remainingCooldown = skill.cooldown - timeSinceLastUse;
                 Debug.Log($"[Server] Client {clientId} trying to use skill {skillIndex} but on cooldown: {remainingCooldown:F1}s remaining");
                 return;
             }
         }
 
-        // Cooldown süresini güncelle
         playerCooldowns[skillIndex] = Time.time;
 
         switch (skill.skillType)
@@ -848,27 +769,24 @@ public class KarakterHareket : NetworkBehaviour
 
     void HandleAttack()
     {
-        // Online mod kontrolü: Normalde online modda sadece bu karakterin sahibi saldırabilir
         bool isOfflineMode = NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening || IsOfflineMode();
         
-        // Offline modda her zaman, online modda sadece karakterin sahibi saldırabilir
         if (isOfflineMode || IsOwner)
         {
             if (Input.GetMouseButtonDown(0) && canAttack)
             {
                 if (isOfflineMode)
                 {
-                    PerformLocalAttack(); // Offline modda doğrudan yerel saldırı
+                    PerformLocalAttack();
                 }
                 else
                 {
-                    AttackServerRpc(); // Online modda sunucu üzerinden saldırı
+                    AttackServerRpc();
                 }
             }
         }
     }
 
-    // Offline modda saldırı için yeni metod
     private void PerformLocalAttack()
     {
         if (weaponObject == null || weaponsScript == null || weaponsScript.weaponData == null)
@@ -897,7 +815,6 @@ public class KarakterHareket : NetworkBehaviour
             }
         }
         
-        // Silah animasyonunu etkinleştir
         if (weaponObject != null)
         {
             weaponAnimator = weaponObject.GetComponent<Animator>();
@@ -919,7 +836,6 @@ public class KarakterHareket : NetworkBehaviour
         }
         else
         {
-            // Yakın dövüş saldırısı için düşmanları tespit et
             float attackRange = 1.0f;
             float attackRadius = 0.5f;
             
@@ -934,24 +850,17 @@ public class KarakterHareket : NetworkBehaviour
             {
                 if (hit.gameObject == gameObject) continue;
                 
-                // Düşmanlara hasar ver
                 Enemies enemy = hit.GetComponent<Enemies>();
                 if (enemy != null)
                 {
                     int weaponDamage = weaponsScript.weaponData.damage;
-                    int totalDamage = weaponDamage + attackDamage; // Offline mod için doğrudan hesaplama
-                    
-                    // Doğrudan TakeDamage metodunu çağır
+                    int totalDamage = weaponDamage + attackDamage;
                     enemy.TakeDamage(totalDamage);
-                    
-                    // Debug mesajı
-                    Debug.Log("Normal saldırı hasarı uygulandı: " + totalDamage + " Düşman: " + enemy.name);
                 }
             }
         }
     }
     
-    // Offline modda menzilli saldırı için yardımcı metod
     private void HandleLocalRangedAttack(string weaponName)
     {
         GameObject bulletPrefab = null;
@@ -990,7 +899,7 @@ public class KarakterHareket : NetworkBehaviour
                 float bulletSpeed = 10f;
                 bulletRb.velocity = direction * bulletSpeed;
                 
-                Destroy(bullet, 5f); // Offline modda direk Destroy kullan
+                Destroy(bullet, 5f);
             }
         }
     }
@@ -1000,11 +909,11 @@ public class KarakterHareket : NetworkBehaviour
         bool isOfflineMode = NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening || IsOfflineMode();
         if (isOfflineMode)
         {
-            return baseWeaponDamage + attackDamage; // Offline modda yerel değeri kullan
+            return baseWeaponDamage + attackDamage;
         }
         else
         {
-            return baseWeaponDamage + networkAttackDamage.Value; // Online modda ağ değerini kullan
+            return baseWeaponDamage + networkAttackDamage.Value; 
         }
     }
 
