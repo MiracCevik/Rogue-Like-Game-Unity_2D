@@ -124,6 +124,12 @@ public class KarakterHareket : NetworkBehaviour
                 lifeText = lifeObj.GetComponentInChildren<TMP_Text>();
         }
         UpdateLifeText(networkLives.Value);
+
+        if (IsOfflineMode())
+        {
+            offlineLives = 3;
+            UpdateLifeText(offlineLives);
+        }
     }
 
     void Awake()
@@ -1169,7 +1175,12 @@ public class KarakterHareket : NetworkBehaviour
         transform.position = spawnPosition;
 
         currentHealth = CharHealth;
-        UpdateLifeText();
+        
+        if (IsOfflineMode())
+        {
+            UpdateLifeText(offlineLives);
+        }
+        
         UpdateHealthBar();
     }
 
@@ -1177,23 +1188,20 @@ public class KarakterHareket : NetworkBehaviour
     {
         if (IsOfflineMode())
         {
-            offlineLives = 3;
-            UpdateLifeText(offlineLives);
+            if (defaultStats != null)
+            {
+                gold = defaultStats.gold;
+                CharHealth = defaultStats.maxHealth;
+                currentHealth = defaultStats.maxHealth;
+                attackDamage = defaultStats.attackDamage;
+                abilityPower = defaultStats.abilityPower;
+                armor = defaultStats.armor;
+                currentWeapon = defaultStats.defaultWeapon;
+            }
         }
         else if (IsServer)
         {
             networkLives.Value = 3;
-        }
-        
-        if (defaultStats != null)
-        {
-            gold = defaultStats.gold;
-            CharHealth = defaultStats.maxHealth;
-            currentHealth = defaultStats.maxHealth;
-            attackDamage = defaultStats.attackDamage;
-            abilityPower = defaultStats.abilityPower;
-            armor = defaultStats.armor;
-            currentWeapon = defaultStats.defaultWeapon;
         }
     }
 
