@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6090572932794491916}
   - component: {fileID: 7335078671350407063}
   - component: {fileID: 162009610001965524}
-  - component: {fileID: 5985520600405684397}
   m_Layer: 9
   m_Name: Heal
   m_TagString: Untagged
@@ -76,17 +75,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5985520600405684397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8584427689785867352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 611e117e75b7f214785b2fd150e5bd33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillIcon: {fileID: 162009610001965524}
-  grayscaleMaterial: {fileID: 2100000, guid: 6e6e63be5bd5f474484c79f8e1b92d51, type: 2}

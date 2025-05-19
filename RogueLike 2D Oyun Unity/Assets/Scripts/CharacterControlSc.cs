@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using TMPro;
 
 public class KarakterHareket : NetworkBehaviour
 {
@@ -41,12 +42,15 @@ public class KarakterHareket : NetworkBehaviour
     private NetworkVariable<int> networkAbilityPower = new NetworkVariable<int>();
     private NetworkVariable<int> networkArmor = new NetworkVariable<int>();
     private NetworkVariable<int> networkGold = new NetworkVariable<int>();
-    private NetworkVariable<int> networkLives = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Server);
+    private NetworkVariable<int> networkLives = new NetworkVariable<int>(3, writePerm: NetworkVariableWritePermission.Server);
+    private int offlineLives = 3;
 
     public GameObject AoePrefab;
 
     private Dictionary<ulong, Dictionary<int, float>> playerSkillCooldowns = new Dictionary<ulong, Dictionary<int, float>>();
     private Dictionary<int, float> skillLastUseTime = new Dictionary<int, float>();
+
+    private TMP_Text lifeText;
 
     private bool IsOfflineMode()
     {
@@ -113,6 +117,13 @@ public class KarakterHareket : NetworkBehaviour
         }
        
         UpdateHealthBar();
+        if (lifeText == null && IsOwner)
+        {
+            var lifeObj = GameObject.Find("Life");
+            if (lifeObj != null)
+                lifeText = lifeObj.GetComponentInChildren<TMP_Text>();
+        }
+        UpdateLifeText(networkLives.Value);
     }
 
     void Awake()
@@ -150,31 +161,42 @@ public class KarakterHareket : NetworkBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeLifeText();
+    }
+
     void Start()
     {
-        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
+        InitializeLifeText();
+    }
+
+    private void InitializeLifeText()
+    {
+        if (lifeText == null)
         {
-            if (greenHealthBar == null || redHealthBar == null)
+            var lifeObj = GameObject.Find("Life");
+            if (lifeObj != null)
             {
-                GameObject healthBarGreen = GameObject.FindGameObjectWithTag("HealthBarGreen");
-                GameObject healthBarRed = GameObject.FindGameObjectWithTag("HealthBarRed");
-                
-                if (healthBarGreen != null)
-                    greenHealthBar = healthBarGreen.GetComponent<Image>();
-                
-                if (healthBarRed != null)
-                    redHealthBar = healthBarRed.GetComponent<Image>();
-                
+                lifeText = lifeObj.GetComponentInChildren<TMP_Text>();
+                Debug.Log("lifeText başlatıldı: " + lifeText);
             }
-            
-            if (defaultStats != null && currentHealth <= 0)
+            else
             {
-                currentHealth = defaultStats.maxHealth;
-                CharHealth = defaultStats.maxHealth;
+                Debug.LogError("Life objesi bulunamadı!");
             }
-            
-            UpdateHealthBar();
         }
+        UpdateLifeText(NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening ? networkLives.Value : 3);
     }
 
     void Update()
@@ -930,7 +952,32 @@ public class KarakterHareket : NetworkBehaviour
 
     private void OnLivesChanged(int previousValue, int newValue)
     {
+        Debug.Log($"OnLivesChanged - IsOwner: {IsOwner}, ClientID: {OwnerClientId}, NewValue: {newValue}");
         
+        if (IsOwner)
+        {
+        UpdateLifeText(newValue);
+        }
+        
+        if (IsServer && newValue <= 0)
+        {
+            StartCoroutine(LoadMainMenuAfterDelay());
+        }
+    }
+
+    private IEnumerator LoadMainMenuAfterDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    private void UpdateLifeText(int lives)
+    {
+        if (lifeText != null && (IsOwner || IsOfflineMode()))
+        {
+            Debug.Log($"Updating life text: {lives} (Offline: {IsOfflineMode()})");
+            lifeText.text = "Life: " + lives;
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -943,7 +990,6 @@ public class KarakterHareket : NetworkBehaviour
         int effectiveDamage = Mathf.Max(0, damage - networkArmor.Value);
         networkHealth.Value -= effectiveDamage;
         networkHealth.Value = Mathf.Clamp(networkHealth.Value, 0, CharHealth);
-
 
         TriggerHitFeedbackClientRpc();
 
@@ -966,18 +1012,27 @@ public class KarakterHareket : NetworkBehaviour
     {
         if (!IsServer) return;
 
+        Debug.Log($"HandleDeath - Current Lives: {networkLives.Value}, ClientID: {OwnerClientId}");
+        
         if (networkLives.Value > 0)
         {
             networkLives.Value--;
-            RespawnPlayer();
-        }
-        else
-        {
-            TriggerPermanentDeathFeedbackClientRpc();
-            NetworkObject networkObject = GetComponent<NetworkObject>();
-            if (networkObject != null)
+            Debug.Log($"New Lives after death: {networkLives.Value}");
+            
+            if (networkLives.Value > 0)
             {
-                networkObject.Despawn(true);
+                RespawnPlayer();
+            }
+            else
+            {
+                Debug.Log("Permanent death triggered");
+                TriggerPermanentDeathFeedbackClientRpc();
+                NetworkObject networkObject = GetComponent<NetworkObject>();
+                if (networkObject != null)
+                {
+                    networkObject.Despawn(true);
+                }
+                SceneManager.LoadScene("MainMenu");
             }
         }
     }
@@ -1011,19 +1066,11 @@ public class KarakterHareket : NetworkBehaviour
     [ClientRpc]
     private void RespawnFeedbackClientRpc()
     {
-        
-        Collider2D mainCollider = GetComponent<Collider2D>();
-        if (mainCollider != null) mainCollider.enabled = true;
-        
-        if (rb != null) rb.simulated = true; 
-        
-        this.enabled = true; 
-
-        UpdateHealthBar();
-
-        if (characterAnimator != null)
+        if (IsOfflineMode())
         {
+            currentHealth = CharHealth;
         }
+        UpdateHealthBar();
     }
 
     [ClientRpc]
@@ -1090,16 +1137,56 @@ public class KarakterHareket : NetworkBehaviour
 
     public void Die()
     {
-        ResetToDefaultStats();
-        FindObjectOfType<SaveManager>().SaveGame();
-        Debug.Log("Die dan sonra save alındı");
-        SceneManager.LoadScene("Level1");
+        if (IsOfflineMode())
+        {
+            offlineLives--;
+            Debug.Log($"Offline lives decreased to: {offlineLives}");
+            
+            UpdateLifeText(offlineLives);
+            
+            if (offlineLives <= 0)
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+            else
+            {
+                ResetToDefaultStats();
+                FindObjectOfType<SaveManager>().SaveGame();
+                StartCoroutine(RespawnAfterDelay());
+            }
+        }
+        else
+        {
+            ReceiveDamageServerRpc(9999);
+        }
     }
+
+    private IEnumerator RespawnAfterDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        Vector3 spawnPosition = transform.position + Vector3.up * 5f;
+        transform.position = spawnPosition;
+
+        currentHealth = CharHealth;
+        UpdateLifeText();
+        UpdateHealthBar();
+    }
+
     private void ResetToDefaultStats()
     {
-        if (defaultStats != null)
+        if (IsOfflineMode())
+        {
+            offlineLives = 3;
+            UpdateLifeText(offlineLives);
+        }
+        else if (IsServer)
         {
             networkLives.Value = 3;
+        }
+        
+        if (defaultStats != null)
+        {
             gold = defaultStats.gold;
             CharHealth = defaultStats.maxHealth;
             currentHealth = defaultStats.maxHealth;
@@ -1107,7 +1194,6 @@ public class KarakterHareket : NetworkBehaviour
             abilityPower = defaultStats.abilityPower;
             armor = defaultStats.armor;
             currentWeapon = defaultStats.defaultWeapon;
-
         }
     }
 
@@ -1254,7 +1340,11 @@ public class KarakterHareket : NetworkBehaviour
                     
                     if (currentHealth <= 0)
                     {
+                     
                         Die();
+
+                        RespawnAfterDelay();
+
                         break;
                     }
                 }
@@ -1636,7 +1726,9 @@ public class KarakterHareket : NetworkBehaviour
 
     public void TakeDamage(int damage)
     {
-        
+        if (currentHealth <= 0)
+            return;
+
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening || IsOfflineMode())
         {
             int effectiveDamage = Mathf.Max(0, damage - armor);
@@ -1652,6 +1744,7 @@ public class KarakterHareket : NetworkBehaviour
             
             if (currentHealth <= 0)
             {
+                Debug.Log(lifeText);
                 Die();
             }
         }
@@ -1660,5 +1753,14 @@ public class KarakterHareket : NetworkBehaviour
             ReceiveDamageServerRpc(damage);
         }
     }
+
+    private void UpdateLifeText()
+    {
+        if (lifeText != null)
+        {
+            lifeText.text = "Life: " + offlineLives;
+        }
+    }
 }
+
 

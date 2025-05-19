@@ -11,7 +11,6 @@ public class ChestController : NetworkBehaviour
     public List<WeaponData> availableWeapons; 
 
     private bool isOpened = false;
-    // Add a flag to track despawn status to prevent multiple attempts
     private bool isBeingDestroyed = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,12 +25,10 @@ public class ChestController : NetworkBehaviour
                 return;
             }
             
-            // Network mod - Server kontrolü
             if (IsServer)
             {
                 OpenChestClientRpc();
             }
-            // Network mod - Client kontrolü
             else if (IsClient)
             {
                 RequestOpenChestServerRpc();
@@ -51,7 +48,6 @@ public class ChestController : NetworkBehaviour
     [ClientRpc]
     private void OpenChestClientRpc()
     {
-        // Make sure we don't try to open the chest multiple times
         if (isOpened) return;
         
         chestAnimator.SetBool("IsOpened", true);
@@ -69,7 +65,6 @@ public class ChestController : NetworkBehaviour
 
         weaponUIPanel.SetActive(true);
 
-        // Mevcut kartları temizle
         foreach (Transform child in weaponCardContainer)
         {
             Destroy(child.gameObject);
@@ -103,19 +98,16 @@ public class ChestController : NetworkBehaviour
 
     public void CloseChest()
     {
-        // Always hide UI panel regardless of network mode
         if (weaponUIPanel != null)
         {
             weaponUIPanel.SetActive(false);
         }
 
-        // Always call the ServerRpc regardless of whether this is the server or not
         if (!isBeingDestroyed && NetworkManager.Singleton.IsListening)
         {
             DestroyChestServerRpc();
             isBeingDestroyed = true;
         }
-        // For standalone mode or if network is not active
         else if (!NetworkManager.Singleton.IsListening)
         {
             Destroy(gameObject);
@@ -125,7 +117,6 @@ public class ChestController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void DestroyChestServerRpc()
     {
-        // This will only execute on the server
         if (isBeingDestroyed) return;
         
         isBeingDestroyed = true;
@@ -145,13 +136,11 @@ public class ChestController : NetworkBehaviour
     [ClientRpc]
     private void DestroyChestClientRpc()
     {
-        // Ensure UI is closed on all clients
         if (weaponUIPanel != null)
         {
             weaponUIPanel.SetActive(false);
         }
         
-        // Set flag so we don't try to destroy it again
         isBeingDestroyed = true;
     }
 

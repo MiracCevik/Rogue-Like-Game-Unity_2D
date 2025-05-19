@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Trunk
   enemyIcon: {fileID: -5219337101871392587, guid: bf4df7b2c9cda4c44b372e2b47a5cb8f, type: 3}
-  enemyDamage: 10
+  enemyDamage: 50
   enemyHealth: 100
   attackSpeed: 1
   attackRange: 10

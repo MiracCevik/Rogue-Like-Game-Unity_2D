@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Rock
   enemyIcon: {fileID: 2775701068622945926, guid: f7ea70eedecbfe34a93819309bcaf901, type: 3}
-  enemyDamage: 10
+  enemyDamage: 30
   enemyHealth: 200
   attackSpeed: 1
   attackRange: 5

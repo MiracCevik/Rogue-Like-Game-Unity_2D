@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: AngryPig
   enemyIcon: {fileID: 0}
-  enemyDamage: 2
+  enemyDamage: 50
   enemyHealth: 200
   attackSpeed: 1
   attackRange: 5

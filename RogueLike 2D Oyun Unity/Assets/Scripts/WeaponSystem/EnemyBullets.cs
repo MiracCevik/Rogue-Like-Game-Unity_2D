@@ -17,7 +17,6 @@ public class EnemyBullets : NetworkBehaviour
 
     private void Update()
     {
-        // Eğer yön atanmışsa onu kullan
         if (moveDirection != Vector2.zero)
         {
             transform.Translate(moveDirection * speed * Time.deltaTime);
@@ -26,10 +25,8 @@ public class EnemyBullets : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // In single player mode, we still want to process damage
         bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
         
-        // Only check IsServer in online mode
         if (!isOfflineMode && !IsServer) return;
 
         if (collision.CompareTag("Player"))

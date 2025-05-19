@@ -21,7 +21,6 @@ public class WeaponsScript : NetworkBehaviour
 
     private bool canShoot = true;
 
-    // Offline (local host) modunda olup olmadığımızı kontrol et
     private bool IsOfflineMode()
     {
         return GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
@@ -94,7 +93,6 @@ public class WeaponsScript : NetworkBehaviour
             }
         }
 
-        // Offline modda veya bu silahın sahibiyse saldırıyı gerçekleştir
         if (IsOfflineMode() || IsOwner)
         {
             PerformAttackServerRpc(totalDamage);
@@ -203,7 +201,6 @@ public class WeaponsScript : NetworkBehaviour
     {
         if (!canShoot || weaponData == null) return;
 
-        // Offline modda veya bu silahın sahibiyse ateş et
         if (IsOfflineMode() || IsOwner)
         {
             if (IsOfflineMode())
@@ -219,7 +216,6 @@ public class WeaponsScript : NetworkBehaviour
         }
     }
 
-    // Offline mod için yerel atış işlemi
     private void PerformLocalShoot()
     {
         if (!canShoot) return;
@@ -255,7 +251,6 @@ public class WeaponsScript : NetworkBehaviour
             return;
         }
 
-        // Silahı aktif et
         ActivateLocalWeapon(weaponTypeStr);
 
         if (bulletPrefab != null && firePoint != null)
@@ -272,7 +267,6 @@ public class WeaponsScript : NetworkBehaviour
                 bulletScript.Initialize(direction, totalDamage, transform.parent.gameObject);
                 bulletScript.SetWeaponData(weaponData);
 
-                // Önemli: Offline modda merminin yönünü ayarla
                 if (direction.x < 0)
                 {
                     Vector3 bulletScale = bullet.transform.localScale;
@@ -301,7 +295,7 @@ public class WeaponsScript : NetworkBehaviour
                 }
             }
 
-            Destroy(bullet, 5f); // Mermiyi 5 saniye sonra temizle
+            Destroy(bullet, 5f); 
         }
         else
         {
@@ -309,7 +303,6 @@ public class WeaponsScript : NetworkBehaviour
         }
     }
 
-    // Offline mod için silahı aktifleştir
     private void ActivateLocalWeapon(string weaponType)
     {
         DeactivateAllWeapons();
@@ -526,10 +519,8 @@ public class WeaponsScript : NetworkBehaviour
             return;
         }
 
-        // Get the client ID that requested the shot
         ulong clientId = rpcParams.Receive.SenderClientId;
         
-        // Find the character controller from the parent
         KarakterHareket characterController = transform.GetComponentInParent<KarakterHareket>();
         if (characterController == null || characterController.OwnerClientId != clientId)
         {

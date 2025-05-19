@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Ghost
   enemyIcon: {fileID: 0}
-  enemyDamage: 10
+  enemyDamage: 30
   enemyHealth: 100
   attackSpeed: 0.7
   attackRange: 7

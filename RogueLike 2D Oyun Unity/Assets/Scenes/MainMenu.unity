@@ -1026,8 +1026,11 @@ MonoBehaviour:
   multiplayerPanel: {fileID: 117167524}
   gameSceneName: Base
   onlineScenes:
-  - OnlineMap
+  - Online1
   - Online2
+  - Online3
+  - Online4
+  - Online5
 --- !u!1 &2122526904
 GameObject:
   m_ObjectHideFlags: 0

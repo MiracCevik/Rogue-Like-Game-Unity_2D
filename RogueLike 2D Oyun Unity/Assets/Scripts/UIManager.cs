@@ -27,10 +27,8 @@ public class UIManager : MonoBehaviour
     
     private void Update()
     {
-        // Oyun sırasında mod göstergesini güncelle
         UpdateModeIndicator();
         
-        // ESC tuşuna basılırsa ana menüyü göster/gizle
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleMainMenu();

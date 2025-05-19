@@ -38,12 +38,10 @@ public class WeaponCard : MonoBehaviour
 
         KarakterHareket localPlayer = null;
         
-        // Offline mod için KarakterHareket.instance'ı kullan
         if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsListening)
         {
             localPlayer = KarakterHareket.instance;
             
-            // Debug log ekleyelim
             if (localPlayer == null)
             {
                 Debug.LogError("Single player modunda karakter bulunamadı!");
@@ -55,7 +53,6 @@ public class WeaponCard : MonoBehaviour
         }
         else
         {
-            // Online mod için tüm karakterleri kontrol et ve sahibi olan karakteri bul
             KarakterHareket[] allPlayers = FindObjectsOfType<KarakterHareket>();
             foreach (KarakterHareket player in allPlayers)
             {
@@ -80,13 +77,10 @@ public class WeaponCard : MonoBehaviour
             }
             else
             {
-                // Debug bilgisi
                 Debug.Log("Single player modunda silah değiştiriliyor: " + weaponData.weaponName);
                 
-                // Single player modunda direkt EquipWeapon çağır
                 localPlayer.EquipWeapon(weaponData);
                 
-                // Silah verilerini kaydet
                 SaveManager saveManager = FindObjectOfType<SaveManager>();
                 if (saveManager != null)
                 {

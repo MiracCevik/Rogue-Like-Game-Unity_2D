@@ -55,28 +55,22 @@ public class Bullet : NetworkBehaviour
     {
         Vector2 dir = netDirection.Value != Vector2.zero ? netDirection.Value : moveDirection;
         transform.Translate(dir * speed * Time.deltaTime, Space.World);
-        
-        // Check if we're running in offline mode
         bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
         
         if (isOfflineMode)
         {
-            // In offline mode, use the local direction to set scale
             transform.localScale = new Vector3(moveDirection.x >= 0 ? 1 : -1, 1, 1);
         }
         else
         {
-            // In online mode, use network variable
             transform.localScale = new Vector3(isFacingRight.Value ? 1 : -1, 1, 1);
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // In single player mode, we still want to process damage
         bool isOfflineMode = GameManager.Instance != null && GameManager.Instance.isLocalHostMode;
         
-        // Only check IsServer in online mode
         if (!isOfflineMode && !IsServer) return;
         
         if (collision.CompareTag("Enemy"))
@@ -86,7 +80,6 @@ public class Bullet : NetworkBehaviour
             {
                 int damage = bulletDamage > 0 ? bulletDamage : (weaponData != null ? weaponData.damage : 10);
                 
-                // In offline mode, call directly the damage method if available
                 if (isOfflineMode && enemy.GetType().GetMethod("TakeDamage") != null)
                 {
                     enemy.SendMessage("TakeDamage", damage);

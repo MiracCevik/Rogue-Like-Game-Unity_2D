@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Skull
   enemyIcon: {fileID: 0}
-  enemyDamage: 15
+  enemyDamage: 30
   enemyHealth: 100
   attackSpeed: 1
   attackRange: 7
